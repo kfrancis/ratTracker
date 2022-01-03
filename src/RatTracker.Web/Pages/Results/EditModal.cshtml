@@ -1,0 +1,44 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using RatTracker.Localization
+@using RatTracker.Web.Pages.Results
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using RatTracker.Results;
+@using System.Globalization
+@inject IHtmlLocalizer<RatTrackerResource> L
+@model EditModalModel
+@{
+    Layout = null;
+}
+
+<form data-ajaxForm="true" asp-page="/Results/EditModal" autocomplete="off">
+    <abp-modal>
+        <abp-modal-header title="@L["Update"].Value"></abp-modal-header>
+
+        <abp-modal-body>
+            <abp-input asp-for="Id" />
+            
+            <abp-input asp-for="Result.TestDate" value="@(Model.Result.TestDate.ToString("yyyy-MM-dd"))" type="date"/>
+
+            <abp-select asp-for="Result.Age"/>
+
+            <abp-select asp-for="Result.Outcome"/>
+
+                        <div class="form-group">
+                <label for="Result_SchoolId">@L["School"]</label>
+                <select id="Result_SchoolId"
+                         name="Result.SchoolId"
+                         class="custom-select form-control"
+                         data-value="@Model.Result.SchoolId" required>
+                    @if (Model.School != null)
+                    {
+                        <option value="@Model.Result.SchoolId">@Model.School.Name</option>
+                    }
+                </select>
+            </div>
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>

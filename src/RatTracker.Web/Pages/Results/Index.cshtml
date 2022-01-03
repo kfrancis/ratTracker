@@ -1,0 +1,76 @@
+@page
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using RatTracker.Permissions
+@using RatTracker.Web.Pages.Results
+@using RatTracker.Web.Menus
+@using Microsoft.AspNetCore.Mvc.Localization
+@using RatTracker.Localization
+@inject IHtmlLocalizer<RatTrackerResource> L
+@inject IAuthorizationService Authorization
+@model IndexModel
+@inject IPageLayout PageLayout
+@{
+    PageLayout.Content.Title = L["Results"].Value;
+    PageLayout.Content.MenuItemName = RatTrackerMenus.Results;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Results/index.js" />
+}
+
+@section content_toolbar {
+    @if (await Authorization.IsGrantedAsync(RatTrackerPermissions.Results.Create))
+    {
+        <abp-button id="NewResultButton" text="@L["NewResult"].Value" icon="plus" button-type="Primary" />
+    }
+}
+
+<abp-card>
+    <abp-card-body>
+		<abp-row class="mb-3">
+            <abp-column size-md="_12">
+                <form id="SearchForm" autocomplete="off">
+                    <div class="input-group">
+                        <input class="form-control page-search-filter-text" id="FilterText" placeholder="@L["Search"]"/>
+                        <abp-button button-type="Primary" type="submit" icon="search"/>
+                    </div>
+                </form>
+            </abp-column>
+            <abp-column size-md="_12" class="mt-3">
+                <a href="javascript:;" id="AdvancedFilterSectionToggler" class="text-decoration-none">@L["SeeAdvancedFilters"]</a>
+            </abp-column>
+        </abp-row>
+
+        <abp-row id="AdvancedFilterSection" style="display: none;">
+            <abp-column size="_3">
+                <abp-input asp-for="TestDateFilterMin" label="@L["MinTestDate"].Value" type="date"/>
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="TestDateFilterMax" label="@L["MaxTestDate"].Value" type="date"/>
+            </abp-column>
+            <abp-column size="_3">
+                <abp-select asp-for="AgeFilter" label="@L["Age"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-select asp-for="OutcomeFilter" label="@L["Outcome"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-select asp-for="SchoolIdFilter" label="@L["School"].Value" />
+            </abp-column>
+        </abp-row>
+
+        <abp-table striped-rows="true" id="ResultsTable">
+            <thead>
+				<tr>
+					<th>@L["Actions"]</th>
+					<th>@L["TestDate"]</th>
+					<th>@L["Age"]</th>
+					<th>@L["Outcome"]</th>
+					<th>@L["School"]</th>
+				</tr>
+            </thead>
+        </abp-table>
+    </abp-card-body>
+</abp-card>

@@ -37,6 +37,10 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Bundling;
+using RatTracker.Web.Bundling;
+using Volo.Abp.AspNetCore.Mvc.UI.Components.LayoutHook;
+using RatTracker.Web.Components.Kendo;
 
 namespace RatTracker.Web
 {
@@ -85,6 +89,32 @@ namespace RatTracker.Web
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
+            ConfigureKendo(context.Services);
+            ConfigureLayoutChanges(configuration);
+        }
+
+        private void ConfigureLayoutChanges(IConfiguration configuration)
+        {
+            Configure<AbpBundlingOptions>(options =>
+            {
+                options
+                    .StyleBundles
+                    .Get(StandardBundles.Styles.Global)
+                    .AddContributors(typeof(KendoStyleContributor));
+            });
+
+            Configure<AbpLayoutHookOptions>(options =>
+            {
+                options.Add(
+                    LayoutHooks.Head.Last, //The hook name
+                    typeof(KendoViewComponent) //The component to add
+                );
+            });
+        }
+
+        private void ConfigureKendo(IServiceCollection services)
+        {
+            //services.AddKendo();
         }
 
         private void ConfigureUrls(IConfiguration configuration)

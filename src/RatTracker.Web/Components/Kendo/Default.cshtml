@@ -1,0 +1,17 @@
+﻿@using RatTracker.Web.Bundling
+@using Microsoft.AspNetCore.Mvc.Localization
+@using RatTracker.Localization
+@inject IHtmlLocalizer<RatTrackerResource> L
+@addTagHelper *, Volo.Abp.AspNetCore.Mvc.UI.Bundling
+
+@{
+    var culture = System.Globalization.CultureInfo.CurrentCulture.ToString();
+}
+
+<!-- Kendo -->
+<abp-script type="typeof(KendoScriptContributor)" />
+<script type="text/javascript">
+    if (kendo) {
+        kendo.culture("@culture");
+    }
+</script>

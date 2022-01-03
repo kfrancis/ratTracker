@@ -2,7 +2,24 @@
   "version": "1.0.0",
   "name": "my-app",
   "private": true,
+  "main": "main.js",
   "dependencies": {
-    "@abp/aspnetcore.mvc.ui.theme.basic": "^5.0.1"
+    "jquery": "^3.6.0",
+    "@popperjs/core": "^2.11.0",
+    "@abp/aspnetcore.mvc.ui.theme.basic": "^5.0.1",
+    "@progress/kendo-theme-bootstrap": "^5.0.0-next.5",
+    "@progress/kendo-ui": "^2021.3.1207",
+    "css-loader": "^5.1.3",
+    "expose-loader": "^2.0.0",
+    "style-loader": "^2.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.26.3",
+    "webpack-cli": "^4.5.0",
+    "@types/bootstrap": "^4.3.1",
+    "@types/jquery": "^3.5.11"
+  },
+  "scripts": {
+    "build": "webpack"
   }
 }

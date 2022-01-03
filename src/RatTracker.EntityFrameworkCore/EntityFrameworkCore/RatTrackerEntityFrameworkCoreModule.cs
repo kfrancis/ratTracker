@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using RatTracker.Results;
+using RatTracker.Schools;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -39,6 +41,10 @@ namespace RatTracker.EntityFrameworkCore
                 /* Remove "includeAllEntities: true" to create
                  * default repositories only for aggregate roots */
                 options.AddDefaultRepositories(includeAllEntities: true);
+
+                options.AddRepository<School, Schools.EfCoreSchoolRepository>();
+
+                options.AddRepository<Result, Results.EfCoreResultRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>
