@@ -1,0 +1,48 @@
+﻿@page
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using RatTracker.Permissions
+@using RatTracker.Web.Pages.Results
+@using RatTracker.Web.Menus
+@using Microsoft.AspNetCore.Mvc.Localization
+@using RatTracker.Localization
+@inject IHtmlLocalizer<RatTrackerResource> L
+@inject IAuthorizationService Authorization
+@model CreateModel
+@inject IPageLayout PageLayout
+@{
+    PageLayout.Content.Title = L["Results"].Value;
+    PageLayout.Content.MenuItemName = RatTrackerMenus.Results;
+}
+<h1>@L["NewResult"].Value</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form data-ajaxForm="true" asp-page="/Results/Create" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <abp-input asp-for="Result.TestDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" />
+
+            <abp-select asp-for="Result.Age" />
+
+            <abp-select asp-for="Result.Outcome" />
+
+            <div class="form-group">
+                <label for="Result_SchoolId">@L["School"]</label>
+                <select id="Result_SchoolId"
+                        class="custom-select form-control"
+                        name="Result.SchoolId"
+                        data-value="@Model.Result.SchoolId" required>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
