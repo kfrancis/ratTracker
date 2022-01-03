@@ -42,13 +42,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\Alternative_Learning_Centres.csv">
+    <None Update="Data\ALCDSB_Adult_Learning.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Elementary_Schools.csv">
+    <None Update="Data\ALCDSB_Elementary_Schools.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Secondary_Schools.csv">
+    <None Update="Data\ALCDSB_Secondary_Schools.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\LDSB_Alternative_Learning_Centres.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\LDSB_Elementary_Schools.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\LDSB_Secondary_Schools.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

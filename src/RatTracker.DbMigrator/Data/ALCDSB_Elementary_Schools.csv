@@ -1,0 +1,34 @@
+gid,Name,description,Type,Address,Phone_Number,Website,Email,School_Type
+1,École Catholique Cathédrale,,Elementary,"301 Johnson Street, Kingston",613-546-7555,www.alcdsb.on.ca/school/ecth,flhpecth@alcdsb.on.ca,"Kindergarten - Grade 8, French Immersion "
+2,École Catholique Cathédrale Early Years Campus,,Elementary,"48 Seventh Avenue, Kingston",613-542-3691,www.alcdsb.on.ca/school/ecth,flhpecth@alcdsb.on.ca,Year 1 and Year 2 Kindergarten
+3,Georges Vanier Catholic School,,Elementary,"100 Tracey Street, Belleville",613-962-7541,www.alcdsb.on.ca/school/gvan,flhpgvan@alcdsb.on.ca,Kindergarten- Grade 8 
+4,Holy Name Catholic School,,Elementary,"370 Kingston Mills Road, Kingston",613-542-8611,www.alcdsb.on.ca/school/name,flhpname@alcdsb.on.ca,Kindergarten-Grade 8 
+5,Holy Name of Mary Catholic School,,Elementary,"7314 Old Highway #2, Marysville",613-396-2741,www.alcdsb.on.ca/school/namm,flhpnamm@alcdsb.on.ca,Kindergarten- Grade 8 
+6,Holy Rosary Catholic School,,Elementary,"10 Prince of Wales Drive, Belleville",613-962-2305,www.alcdsb.on.ca/school/rosa,flhprosa@alcdsb.on.ca,Kindergarten- Grade 8 
+7,J J O'Neill Catholic School,,Elementary,"240 Marilyn Avenue, Napanee",613-354-9500,www.alcdsb.on.ca/school/jjon,flhpjjon@alcdsb.on.ca,Kindergarten- Grade 8 
+8,Mother Teresa Catholic School,,Elementary,"1044 Lancaster Drive, Kingston",613-384-8644,www.alcdsb.on.ca/school/trsa,flhptrsa@alcdsb.on.ca,Kindergarten - Grade 8
+9,Our Lady of Fatima Catholic School,,Elementary,"300 Sidney Street, Belleville ",613-962-2162,www.alcdsb.on.ca/school/ofat,flhpofat@alcdsb.on.ca,Kindergarten- Grade 8 
+10,Our Lady of Lourdes Catholic School,,Elementary,"20 Cranbrook Street, Kingston",613-389-2800,www.alcdsb.on.ca/school/olol,flhpolol@alcdsb.on.ca,Kindergarten - Grade 8
+11,Our Lady of Mercy Catholic School,,Elementary,"192 Bridge Steet West, Bancroft",613-332-3300,www.alcdsb.on.ca/school/omer,flhpomer@alcdsb.on.ca,Kindergarten - Grade 8
+12,Our Lady of Mount Carmel Catholic School,,Elementary,"97 Park Crescent, Amherstview",613-389-1122,www.alcdsb.on.ca/school/olmc,flhpolmc@alcdsb.on.ca,"Kindergarten - Grade 8, French Immersion "
+13,Sacred Heart Catholic School,,Elementary,"31 Thomas Bata Boulevard, Batawa",613-398-6393,www.alcdsb.on.ca/school/shrb,flhpshrb@alcdsb.on.ca,Kindergarten - Grade 8
+14,Sacred Heart Catholic School,,Elementary,"50 Burshall Street, Marmora",613-472-2625,www.alcdsb.on.ca/school/shrm,flhpshrm@alcdsb.on.ca,Kindergarten - Grade 8
+15,Sacred Heart Catholic School,,Elementary,"#57 Road 95, Wolfe Island",613-385-2348,www.alcdsb.on.ca/school/shrt,flhpshrt@alcdsb.on.ca,Kindergarten-Grade 8
+16,St Thomas More Catholic School,,Elementary,"234 Norman Rogers Drive, Kingston",613-542-1575,www.alcdsb.on.ca/school/sttm,flhpsttm@alcdsb.on.ca,Kindergarten - Grade 8
+17,St. Carthagh Catholic School,,Elementary,"114 Hungerford Road, Tweed",613-478-2601,www.alcdsb.on.ca/school/cart,flhpcart@alcdsb.on.ca,Kindergarten - Grade 8
+18,St. Francis of Assisi Catholic School,,Elementary,"114 Wiley Street, Kingston",613-546-5981,www.alcdsb.on.ca/school/stfa,flhpstfa@alcdsb.on.ca,Kindergarten - Grade 8
+19,St. Gregory Catholic School,,Elementary,"7 Owen Street, Picton",613-476-2461,www.alcdsb.on.ca/school/greg,flhpgreg@alcdsb.on.ca,Kindergarten - Grade 8
+20,St. James Major Catholic School ,,Elementary,"14608 Highway 38, Sharbot Lake",613-279-3300,www.alcdsb.on.ca/school/jams,flhpjams@alcdsb.on.ca,Kindegarten - Grade 8 
+21,St. John XXIII Catholic School,,Elementary,"736 High Gate Park Drive, Kingston",613-389-4388,www.alcdsb.on.ca/school/john,flhpjohn@alcdsb.on.ca,Kindergarten - Grade 8
+22,St. Joseph Catholic School,,Elementary,"405 Bridge Street East, Belleville",613-962-3653,www.alcdsb.on.ca/school/jose,flhpjose@alcdsb.on.ca,Kindergarten - Grade 8
+23,St. Marguerite Bourgeoys Catholic School,,Elementary,"355 Waterloo Drive, Kingston",613-549-4499,www.alcdsb.on.ca/school/marg,flhpmarg@alcdsb.on.ca,Kindegarten - Grade 8 
+24,St. Martha Catholic School,,Elementary,"455 St. Martha Street, Kingston",613-544-4050,www.alcdsb.on.ca/school/mart,flhpmart@alcdsb.on.ca,Kindergarten - Grade 8
+25,St. Martin of Tours Catholic School,,Elementary,"62 Post Street, Whitney",613-637-2720,www.alcdsb.on.ca/school/marn,flhpmarn@alcdsb.on.ca,Kindergarten - Grade 8
+26,St. Mary Catholic School,,Elementary,"1285 Read Road, Shannonville",613-396-5430,www.alcdsb.on.ca/school/stms,flhpstms@alcdsb.on.ca,Kindergarten - Grade 8 
+27,St. Mary Catholic School,,Elementary,"85 Campbell Street, Trenton",613-392-3538,www.alcdsb.on.ca/school/stmt,flhpstmt@alcdsb.on.ca,"Kindergarten - Grade 6, French Immersion "
+28,St. Michael Catholic School,,Elementary,"273 Church Street, Belleville",613-968-5765,www.alcdsb.on.ca/school/mich,flhpmich@alcdsb.on.ca,"Kindergarten - Grade 8, French Immersion "
+29,St. Patrick Catholic School,,Elementary,"3889 Wilton Road, Harrowsmith",613-372-2251,www.alcdsb.on.ca/school/stph,flhpstph@alcdsb.on.ca,Kindergarten - Grade 8
+30,St. Patrick Catholic School,,Elementary,"6041 Highway 41, Erinsville",613-379-2991,www.alcdsb.on.ca/school/stpe,flhpstpe@alcdsb.on.ca,Kindergarten - Grade 8
+31,St. Paul Catholic School,,Elementary,"266 McMahon Avenue, Kingston",613-542-6101,www.alcdsb.on.ca/school/paul,flhppaul@alcdsb.on.ca,Kindegarten - Grade 8 
+32,St. Peter Catholic School,,Elementary,"15A Tripp Boulevard, Trenton",613-392-6577,www.alcdsb.on.ca/school/pett,flhppett@alcdsb.on.ca,Kindergarten - Grade 6
+33,Archbishop O'Sullivan Catholic School,,Elementary,"974 Pembridge Crescent, Kingston",613-389-1891,www.alcdsb.on.ca/school/abos,flhpabos@alcdsb.on.ca,Kindergarten - Grade 8
