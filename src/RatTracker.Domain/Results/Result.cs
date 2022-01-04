@@ -1,11 +1,4 @@
-using RatTracker.Results;
-using RatTracker.Schools;
-using System;
-using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
-using Volo.Abp.MultiTenancy;
-using JetBrains.Annotations;
-using Volo.Abp;
 
 namespace RatTracker.Results
 {
@@ -20,7 +13,6 @@ namespace RatTracker.Results
 
         public Result()
         {
-
         }
 
         public Result(Guid id, DateTime testDate, AgeBrackets age, TestOutcome outcome, Guid schoolId)

@@ -1,4 +1,3 @@
-﻿using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
 
@@ -9,7 +8,7 @@ namespace RatTracker.Pages
         [Fact]
         public async Task Welcome_Page()
         {
-            var response = await GetResponseAsStringAsync("/");
+            var response = await GetResponseAsStringAsync("/").ConfigureAwait(false);
             response.ShouldNotBeNull();
         }
     }

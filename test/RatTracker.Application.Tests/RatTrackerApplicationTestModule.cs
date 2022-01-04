@@ -1,4 +1,6 @@
-﻿using Volo.Abp.Modularity;
+using Volo.Abp.Modularity;
+
+[assembly: CLSCompliant(false)]
 
 namespace RatTracker
 {
@@ -8,6 +10,5 @@ namespace RatTracker
         )]
     public class RatTrackerApplicationTestModule : AbpModule
     {
-
     }
 }

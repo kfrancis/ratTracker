@@ -15,7 +15,7 @@ namespace RatTracker.Web.Menus
         {
             if (context.Menu.Name == StandardMenus.Main)
             {
-                await ConfigureMainMenuAsync(context);
+                await ConfigureMainMenuAsync(context).ConfigureAwait(false);
             }
         }
 
@@ -53,7 +53,7 @@ namespace RatTracker.Web.Menus
                     l["Menu:Schools"],
                     url: "/Schools",
                     icon: "fa fa-file-alt",
-                    requiredPermissionName: RatTrackerPermissions.Schools.Default)
+                    requiredPermissionName: RatTrackerPermissions.SchoolPermissions.Default)
             );
 
             context.Menu.AddItem(
@@ -62,7 +62,7 @@ namespace RatTracker.Web.Menus
                     l["Menu:Results"],
                     url: "/Results",
                     icon: "fa fa-file-alt",
-                    requiredPermissionName: RatTrackerPermissions.Results.Default)
+                    requiredPermissionName: RatTrackerPermissions.ResultPermissionss.Default)
             );
         }
     }

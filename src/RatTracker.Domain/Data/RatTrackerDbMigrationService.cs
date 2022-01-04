@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
+using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Volo.Abp.Data;
@@ -49,12 +45,12 @@ namespace RatTracker.Data
 
             Logger.LogInformation("Started database migrations...");
 
-            await MigrateDatabaseSchemaAsync();
-            await SeedDataAsync();
+            await MigrateDatabaseSchemaAsync().ConfigureAwait(false);
+            await SeedDataAsync().ConfigureAwait(false);
 
             Logger.LogInformation($"Successfully completed host database migrations.");
 
-            var tenants = await _tenantRepository.GetListAsync(includeDetails: true);
+            var tenants = await _tenantRepository.GetListAsync(includeDetails: true).ConfigureAwait(false);
 
             var migratedDatabaseSchemas = new HashSet<string>();
             foreach (var tenant in tenants)
@@ -69,41 +65,43 @@ namespace RatTracker.Data
 
                         if (!migratedDatabaseSchemas.IsSupersetOf(tenantConnectionStrings))
                         {
-                            await MigrateDatabaseSchemaAsync(tenant);
+                            await MigrateDatabaseSchemaAsync(tenant).ConfigureAwait(false);
 
                             migratedDatabaseSchemas.AddIfNotContains(tenantConnectionStrings);
                         }
                     }
 
-                    await SeedDataAsync(tenant);
+                    await SeedDataAsync(tenant).ConfigureAwait(false);
                 }
 
-                Logger.LogInformation($"Successfully completed {tenant.Name} tenant database migrations.");
+                var tenantName = tenant.Name;
+                Logger.LogInformation("Successfully completed {TenantName} tenant database migrations.", tenantName);
             }
 
             Logger.LogInformation("Successfully completed all database migrations.");
             Logger.LogInformation("You can safely end this process...");
         }
 
-        private async Task MigrateDatabaseSchemaAsync(Tenant tenant = null)
+        private async Task MigrateDatabaseSchemaAsync(Tenant? tenant = null)
         {
-            Logger.LogInformation(
-                $"Migrating schema for {(tenant == null ? "host" : tenant.Name + " tenant")} database...");
+            string tenantName = (tenant == null ? "host" : tenant.Name + " tenant");
+            Logger.LogInformation("Migrating schema for {TenantName} database...", tenantName);
 
             foreach (var migrator in _dbSchemaMigrators)
             {
-                await migrator.MigrateAsync();
+                await migrator.MigrateAsync().ConfigureAwait(false);
             }
         }
 
-        private async Task SeedDataAsync(Tenant tenant = null)
+        private async Task SeedDataAsync(Tenant? tenant = null)
         {
-            Logger.LogInformation($"Executing {(tenant == null ? "host" : tenant.Name + " tenant")} database seed...");
+            string tenantName = (tenant == null ? "host" : tenant.Name + " tenant");
+            Logger.LogInformation("Executing {TenantName} database seed...", tenantName);
 
             await _dataSeeder.SeedAsync(new DataSeedContext(tenant?.Id)
                 .WithProperty(IdentityDataSeedContributor.AdminEmailPropertyName, IdentityDataSeedContributor.AdminEmailDefaultValue)
                 .WithProperty(IdentityDataSeedContributor.AdminPasswordPropertyName, IdentityDataSeedContributor.AdminPasswordDefaultValue)
-            );
+            ).ConfigureAwait(false);
         }
 
         private bool AddInitialMigrationIfNotExist()
@@ -115,7 +113,9 @@ namespace RatTracker.Data
                     return false;
                 }
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 return false;
             }
@@ -132,25 +132,33 @@ namespace RatTracker.Data
                     return false;
                 }
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception e)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
-                Logger.LogWarning("Couldn't determinate if any migrations exist : " + e.Message);
+                Logger.LogWarning("Couldn't determinate if any migrations exist: {Message}", e.Message);
                 return false;
             }
         }
 
-        private bool DbMigrationsProjectExists()
+        private static bool DbMigrationsProjectExists()
         {
             var dbMigrationsProjectFolder = GetEntityFrameworkCoreProjectFolderPath();
 
             return dbMigrationsProjectFolder != null;
         }
 
-        private bool MigrationsFolderExists()
+        private static bool MigrationsFolderExists()
         {
             var dbMigrationsProjectFolder = GetEntityFrameworkCoreProjectFolderPath();
-
-            return Directory.Exists(Path.Combine(dbMigrationsProjectFolder, "Migrations"));
+            if (dbMigrationsProjectFolder != null)
+            {
+                return Directory.Exists(Path.Combine(dbMigrationsProjectFolder, "Migrations"));
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void AddInitialMigration()
@@ -181,34 +189,40 @@ namespace RatTracker.Data
             }
             catch (Exception)
             {
+#pragma warning disable CA2201 // Do not raise reserved exception types
                 throw new Exception("Couldn't run ABP CLI...");
+#pragma warning restore CA2201 // Do not raise reserved exception types
             }
         }
 
-        private string GetEntityFrameworkCoreProjectFolderPath()
+        private static string? GetEntityFrameworkCoreProjectFolderPath()
         {
             var slnDirectoryPath = GetSolutionDirectoryPath();
 
             if (slnDirectoryPath == null)
             {
+#pragma warning disable CA2201 // Do not raise reserved exception types
                 throw new Exception("Solution folder not found!");
+#pragma warning restore CA2201 // Do not raise reserved exception types
             }
 
             var srcDirectoryPath = Path.Combine(slnDirectoryPath, "src");
 
             return Directory.GetDirectories(srcDirectoryPath)
-                .FirstOrDefault(d => d.EndsWith(".EntityFrameworkCore"));
+                .FirstOrDefault(d => d.EndsWith(".EntityFrameworkCore", true, CultureInfo.CurrentCulture));
         }
 
-        private string GetSolutionDirectoryPath()
+        private static string? GetSolutionDirectoryPath()
         {
             var currentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
 
-            while (Directory.GetParent(currentDirectory.FullName) != null)
+            while (currentDirectory != null && Directory.GetParent(currentDirectory.FullName) != null)
             {
                 currentDirectory = Directory.GetParent(currentDirectory.FullName);
 
-                if (Directory.GetFiles(currentDirectory.FullName).FirstOrDefault(f => f.EndsWith(".sln")) != null)
+                if (currentDirectory == null) { continue; }
+
+                if (Directory.GetFiles(currentDirectory.FullName).FirstOrDefault(f => f.EndsWith(".sln", true, CultureInfo.CurrentCulture)) != null)
                 {
                     return currentDirectory.FullName;
                 }

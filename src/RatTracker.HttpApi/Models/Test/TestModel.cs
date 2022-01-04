@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace RatTracker.Models.Test
 {
     public class TestModel

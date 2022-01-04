@@ -1,4 +1,4 @@
-using RatTracker.Shared;
+using RatTracker.Common;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,12 +26,12 @@ namespace RatTracker.Web.Pages.Results
         {
             Result = new ResultCreateDto();
 
-            await Task.CompletedTask;
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _resultsAppService.CreateAsync(Result);
+            await _resultsAppService.CreateAsync(Result).ConfigureAwait(false);
             return NoContent();
         }
     }

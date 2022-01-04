@@ -1,16 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
 using Volo.Abp.Modularity;
-using Volo.Abp.Uow;
 using Volo.Abp.Testing;
+using Volo.Abp.Uow;
 
 namespace RatTracker
 {
     /* All test classes are derived from this class, directly or indirectly.
      */
-    public abstract class RatTrackerTestBase<TStartupModule> : AbpIntegratedTest<TStartupModule> 
+
+    public abstract class RatTrackerTestBase<TStartupModule> : AbpIntegratedTest<TStartupModule>
         where TStartupModule : IAbpModule
     {
         protected override void SetAbpApplicationCreationOptions(AbpApplicationCreationOptions options)
@@ -31,9 +30,9 @@ namespace RatTracker
 
                 using (var uow = uowManager.Begin(options))
                 {
-                    await action();
+                    await action().ConfigureAwait(false);
 
-                    await uow.CompleteAsync();
+                    await uow.CompleteAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -51,8 +50,8 @@ namespace RatTracker
 
                 using (var uow = uowManager.Begin(options))
                 {
-                    var result = await func();
-                    await uow.CompleteAsync();
+                    var result = await func().ConfigureAwait(false);
+                    await uow.CompleteAsync().ConfigureAwait(false);
                     return result;
                 }
             }

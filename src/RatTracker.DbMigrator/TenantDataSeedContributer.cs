@@ -1,13 +1,6 @@
-﻿using CsvHelper;
-using CsvHelper.Configuration;
-using RatTracker.Schools;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CsvHelper;
+using RatTracker.Schools;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
@@ -37,21 +30,21 @@ namespace RatTracker.DbMigrator
         {
             using (_currentTenant.Change(context?.TenantId))
             {
-                if (await _schoolRepository.GetCountAsync() > 0)
+                if (await _schoolRepository.GetCountAsync().ConfigureAwait(false) > 0)
                 {
                     return;
                 }
 
-                await ProcessFileAsync("Data\\LDSB_Alternative_Learning_Centres.csv");
-                await ProcessFileAsync("Data\\LDSB_Elementary_Schools.csv");
-                await ProcessFileAsync("Data\\LDSB_Secondary_Schools.csv");
+                await ProcessFileAsync("Data\\LDSB_Alternative_Learning_Centres.csv").ConfigureAwait(false);
+                await ProcessFileAsync("Data\\LDSB_Elementary_Schools.csv").ConfigureAwait(false);
+                await ProcessFileAsync("Data\\LDSB_Secondary_Schools.csv").ConfigureAwait(false);
 
-                await ProcessFileAsync("Data\\ALCDSB_Adult_Learning.csv");
-                await ProcessFileAsync("Data\\ALCDSB_Elementary_Schools.csv");
-                await ProcessFileAsync("Data\\ALCDSB_Secondary_Schools.csv");
+                await ProcessFileAsync("Data\\ALCDSB_Adult_Learning.csv").ConfigureAwait(false);
+                await ProcessFileAsync("Data\\ALCDSB_Elementary_Schools.csv").ConfigureAwait(false);
+                await ProcessFileAsync("Data\\ALCDSB_Secondary_Schools.csv").ConfigureAwait(false);
 
-                var newCount = await _schoolRepository.GetCountAsync();
-                await Console.Out.WriteLineAsync($"Imported {newCount} records");
+                var newCount = await _schoolRepository.GetCountAsync().ConfigureAwait(false);
+                await Console.Out.WriteLineAsync($"Imported {newCount} records").ConfigureAwait(false);
             }
         }
 
@@ -100,7 +93,6 @@ namespace RatTracker.DbMigrator
                 var schoolRecords = csv.GetRecords(minTypeDef);
                 foreach (var schoolRecord in schoolRecords)
                 {
-
                     var addressParts = schoolRecord.Address.Split(',');
 
                     var book = new School(
@@ -109,7 +101,7 @@ namespace RatTracker.DbMigrator
                         address1: addressParts[0]?.Trim() ?? string.Empty,
                         address2: string.Empty,
                         address3: string.Empty,
-                        city: addressParts.Length > 1 && !string.IsNullOrEmpty(addressParts[1]?.Trim())? addressParts[1].Trim() : "Kingston",
+                        city: addressParts.Length > 1 && !string.IsNullOrEmpty(addressParts[1]?.Trim()) ? addressParts[1].Trim() : "Kingston",
                         postalCode: string.Empty,
                         email: schoolRecord.Email,
                         phone: schoolRecord.Phone_Number,
@@ -118,7 +110,7 @@ namespace RatTracker.DbMigrator
                         website: schoolRecord.Website
                     );
 
-                    await _schoolRepository.InsertAsync(book);
+                    await _schoolRepository.InsertAsync(book).ConfigureAwait(false);
                 }
             }
         }

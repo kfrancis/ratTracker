@@ -1,22 +1,16 @@
-using RatTracker.Shared;
-using RatTracker.Schools;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Authorization;
+using RatTracker.Common;
+using RatTracker.Permissions;
+using RatTracker.Schools;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using RatTracker.Permissions;
-using RatTracker.Results;
 
 namespace RatTracker.Results
 {
-
-    [Authorize(RatTrackerPermissions.Results.Default)]
+    [Authorize(RatTrackerPermissions.ResultPermissionss.Default)]
     public class ResultsAppService : ApplicationService, IResultsAppService
     {
         private readonly IResultRepository _resultRepository;
@@ -29,8 +23,8 @@ namespace RatTracker.Results
 
         public virtual async Task<PagedResultDto<ResultWithNavigationPropertiesDto>> GetListAsync(GetResultsInput input)
         {
-            var totalCount = await _resultRepository.GetCountAsync(input.FilterText, input.TestDateMin, input.TestDateMax, input.Age, input.Outcome, input.SchoolId);
-            var items = await _resultRepository.GetListWithNavigationPropertiesAsync(input.FilterText, input.TestDateMin, input.TestDateMax, input.Age, input.Outcome, input.SchoolId, input.Sorting, input.MaxResultCount, input.SkipCount);
+            var totalCount = await _resultRepository.GetCountAsync(input.FilterText, input.TestDateMin, input.TestDateMax, input.Age, input.Outcome, input.SchoolId).ConfigureAwait(false);
+            var items = await _resultRepository.GetListWithNavigationPropertiesAsync(input.FilterText, input.TestDateMin, input.TestDateMax, input.Age, input.Outcome, input.SchoolId, input.Sorting, input.MaxResultCount, input.SkipCount).ConfigureAwait(false);
 
             return new PagedResultDto<ResultWithNavigationPropertiesDto>
             {
@@ -42,22 +36,22 @@ namespace RatTracker.Results
         public virtual async Task<ResultWithNavigationPropertiesDto> GetWithNavigationPropertiesAsync(Guid id)
         {
             return ObjectMapper.Map<ResultWithNavigationProperties, ResultWithNavigationPropertiesDto>
-                (await _resultRepository.GetWithNavigationPropertiesAsync(id));
+                (await _resultRepository.GetWithNavigationPropertiesAsync(id).ConfigureAwait(false));
         }
 
         public virtual async Task<ResultDto> GetAsync(Guid id)
         {
-            return ObjectMapper.Map<Result, ResultDto>(await _resultRepository.GetAsync(id));
+            return ObjectMapper.Map<Result, ResultDto>(await _resultRepository.GetAsync(id).ConfigureAwait(false));
         }
 
         public virtual async Task<PagedResultDto<LookupDto<Guid>>> GetSchoolLookupAsync(LookupRequestDto input)
         {
-            var query = (await _schoolRepository.GetQueryableAsync())
+            var query = (await _schoolRepository.GetQueryableAsync().ConfigureAwait(false))
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Filter),
                     x => x.Name != null &&
                          x.Name.Contains(input.Filter));
 
-            var lookupData = await query.PageBy(input.SkipCount, input.MaxResultCount).ToDynamicListAsync<School>();
+            var lookupData = await query.PageBy(input.SkipCount, input.MaxResultCount).ToDynamicListAsync<School>().ConfigureAwait(false);
             var totalCount = query.Count();
             return new PagedResultDto<LookupDto<Guid>>
             {
@@ -66,13 +60,13 @@ namespace RatTracker.Results
             };
         }
 
-        [Authorize(RatTrackerPermissions.Results.Delete)]
+        [Authorize(RatTrackerPermissions.ResultPermissionss.Delete)]
         public virtual async Task DeleteAsync(Guid id)
         {
-            await _resultRepository.DeleteAsync(id);
+            await _resultRepository.DeleteAsync(id).ConfigureAwait(false);
         }
 
-        [Authorize(RatTrackerPermissions.Results.Create)]
+        [Authorize(RatTrackerPermissions.ResultPermissionss.Create)]
         public virtual async Task<ResultDto> CreateAsync(ResultCreateDto input)
         {
             if (input.SchoolId == default)
@@ -82,11 +76,11 @@ namespace RatTracker.Results
 
             var result = ObjectMapper.Map<ResultCreateDto, Result>(input);
 
-            result = await _resultRepository.InsertAsync(result, autoSave: true);
+            result = await _resultRepository.InsertAsync(result, autoSave: true).ConfigureAwait(false);
             return ObjectMapper.Map<Result, ResultDto>(result);
         }
 
-        [Authorize(RatTrackerPermissions.Results.Edit)]
+        [Authorize(RatTrackerPermissions.ResultPermissionss.Edit)]
         public virtual async Task<ResultDto> UpdateAsync(Guid id, ResultUpdateDto input)
         {
             if (input.SchoolId == default)
@@ -94,9 +88,9 @@ namespace RatTracker.Results
                 throw new UserFriendlyException(L["The {0} field is required.", L["School"]]);
             }
 
-            var result = await _resultRepository.GetAsync(id);
+            var result = await _resultRepository.GetAsync(id).ConfigureAwait(false);
             ObjectMapper.Map(input, result);
-            result = await _resultRepository.UpdateAsync(result, autoSave: true);
+            result = await _resultRepository.UpdateAsync(result, autoSave: true).ConfigureAwait(false);
             return ObjectMapper.Map<Result, ResultDto>(result);
         }
     }

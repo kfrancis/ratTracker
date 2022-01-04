@@ -1,5 +1,4 @@
-﻿using Shouldly;
-using System.Threading.Tasks;
+using Shouldly;
 using Volo.Abp.Identity;
 using Xunit;
 
@@ -10,6 +9,7 @@ namespace RatTracker.Samples
      * (like IIdentityUserAppService here).
      * Only test your own application services.
      */
+
     public class SampleAppServiceTests : RatTrackerApplicationTestBase
     {
         private readonly IIdentityUserAppService _userAppService;
@@ -23,7 +23,7 @@ namespace RatTracker.Samples
         public async Task Initial_Data_Should_Contain_Admin_User()
         {
             //Act
-            var result = await _userAppService.GetListAsync(new GetIdentityUsersInput());
+            var result = await _userAppService.GetListAsync(new GetIdentityUsersInput()).ConfigureAwait(false);
 
             //Assert
             result.TotalCount.ShouldBeGreaterThan(0);

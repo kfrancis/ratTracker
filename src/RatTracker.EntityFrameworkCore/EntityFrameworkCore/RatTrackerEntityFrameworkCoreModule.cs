@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using RatTracker.Results;
 using RatTracker.Schools;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;

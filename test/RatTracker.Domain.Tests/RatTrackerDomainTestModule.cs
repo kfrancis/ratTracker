@@ -1,4 +1,4 @@
-﻿using RatTracker.EntityFrameworkCore;
+using RatTracker.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 
 namespace RatTracker
@@ -8,6 +8,5 @@ namespace RatTracker
         )]
     public class RatTrackerDomainTestModule : AbpModule
     {
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using RatTracker.Results;
 using RatTracker.Schools;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -21,7 +21,7 @@ namespace RatTracker.EntityFrameworkCore
     [ReplaceDbContext(typeof(IIdentityDbContext))]
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName("Default")]
-    public class RatTrackerDbContext : 
+    public class RatTrackerDbContext :
         AbpDbContext<RatTrackerDbContext>,
         IIdentityDbContext,
         ITenantManagementDbContext
@@ -46,22 +46,23 @@ namespace RatTracker.EntityFrameworkCore
 
         //Identity
         public DbSet<IdentityUser> Users { get; set; }
+
         public DbSet<IdentityRole> Roles { get; set; }
         public DbSet<IdentityClaimType> ClaimTypes { get; set; }
         public DbSet<OrganizationUnit> OrganizationUnits { get; set; }
         public DbSet<IdentitySecurityLog> SecurityLogs { get; set; }
         public DbSet<IdentityLinkUser> LinkUsers { get; set; }
-        
+
         // Tenant Management
         public DbSet<Tenant> Tenants { get; set; }
+
         public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
-        #endregion
-        
+        #endregion Entities from the modules
+
         public RatTrackerDbContext(DbContextOptions<RatTrackerDbContext> options)
             : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

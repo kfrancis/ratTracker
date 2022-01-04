@@ -1,6 +1,4 @@
-using RatTracker.Results;
 using Volo.Abp.Application.Dtos;
-using System;
 
 namespace RatTracker.Results
 {
@@ -16,7 +14,7 @@ namespace RatTracker.Results
 
         public GetResultsInput()
         {
-
+            FilterText = string.Empty;
         }
     }
 }

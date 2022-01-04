@@ -8,7 +8,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using RatTracker.Schools;
-using RatTracker.Shared;
+using RatTracker.Common;
 
 namespace RatTracker.Web.Pages.Schools
 {
@@ -31,7 +31,7 @@ namespace RatTracker.Web.Pages.Schools
         public async Task OnGetAsync()
         {
 
-            await Task.CompletedTask;
+            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }

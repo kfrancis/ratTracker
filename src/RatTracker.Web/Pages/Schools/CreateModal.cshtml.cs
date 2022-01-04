@@ -24,12 +24,12 @@ namespace RatTracker.Web.Pages.Schools
         public async Task OnGetAsync()
         {
             School = new SchoolCreateDto();
-            await Task.CompletedTask;
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _schoolsAppService.CreateAsync(School);
+            await _schoolsAppService.CreateAsync(School).ConfigureAwait(false);
             return NoContent();
         }
     }

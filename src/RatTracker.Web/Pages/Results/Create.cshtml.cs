@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Owl.reCAPTCHA;
 using Owl.reCAPTCHA.v3;
-using RatTracker.EntityFrameworkCore;
 using RatTracker.Results;
 
 namespace RatTracker.Web.Pages.Results
@@ -35,17 +28,21 @@ namespace RatTracker.Web.Pages.Results
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var response = await _siteVerify.Verify(new reCAPTCHASiteVerifyRequest
+            var verifyRequest = new reCAPTCHASiteVerifyRequest
             {
-                Response = Result.Token,
-                RemoteIp = HttpContext.Connection.RemoteIpAddress.ToString()
-            });
+                Response = Result.Token
+            };
+            if (HttpContext.Connection.RemoteIpAddress != null)
+            {
+                verifyRequest.RemoteIp = HttpContext.Connection.RemoteIpAddress.ToString();
+            }
+            var response = await _siteVerify.Verify(verifyRequest).ConfigureAwait(false);
 
             if (response.Success)
             {
-                await _resultsAppService.CreateAsync(Result);
+                await _resultsAppService.CreateAsync(Result).ConfigureAwait(false);
             }
-            
+
             return NoContent();
         }
     }

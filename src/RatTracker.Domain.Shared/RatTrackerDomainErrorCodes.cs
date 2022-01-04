@@ -1,4 +1,4 @@
-﻿namespace RatTracker
+namespace RatTracker
 {
     public static class RatTrackerDomainErrorCodes
     {

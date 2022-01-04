@@ -1,5 +1,3 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,7 +32,7 @@ namespace RatTracker.DbMigrator
                 await application
                     .ServiceProvider
                     .GetRequiredService<RatTrackerDbMigrationService>()
-                    .MigrateAsync();
+                    .MigrateAsync().ConfigureAwait(false);
 
                 application.Shutdown();
 

@@ -1,4 +1,4 @@
-﻿using Localization.Resources.AbpUi;
+using Localization.Resources.AbpUi;
 using RatTracker.Localization;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;

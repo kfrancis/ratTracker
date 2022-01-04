@@ -1,5 +1,4 @@
 using Volo.Abp.Application.Dtos;
-using System;
 
 namespace RatTracker.Schools
 {
@@ -16,7 +15,13 @@ namespace RatTracker.Schools
 
         public GetSchoolsInput()
         {
-
+            FilterText = string.Empty;
+            Name = string.Empty;
+            Address1 = string.Empty;
+            Address2 = string.Empty;
+            Address3 = string.Empty;
+            City = string.Empty;
+            PostalCode = string.Empty;
         }
     }
 }

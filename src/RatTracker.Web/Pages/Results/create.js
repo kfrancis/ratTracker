@@ -17,4 +17,6 @@ $(function () {
         $('#' + lastNpIdId).val(modal.find('#CurrentLookupId').val());
         $('#' + lastNpDisplayNameId).val(modal.find('#CurrentLookupDisplayName').val());
     });
+
+    $("#Result_TestDate").kendoDatePicker();
 });

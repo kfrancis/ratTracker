@@ -1,14 +1,8 @@
-using RatTracker.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RatTracker.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
-using RatTracker.EntityFrameworkCore;
 
 namespace RatTracker.Results
 {
@@ -17,13 +11,12 @@ namespace RatTracker.Results
         public EfCoreResultRepository(IDbContextProvider<RatTrackerDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
-
         }
 
         public async Task<ResultWithNavigationProperties> GetWithNavigationPropertiesAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await (await GetQueryForNavigationPropertiesAsync())
-                .FirstOrDefaultAsync(e => e.Result.Id == id, GetCancellationToken(cancellationToken));
+            return await (await GetQueryForNavigationPropertiesAsync().ConfigureAwait(false))
+                .FirstOrDefaultAsync(e => e.Result.Id == id, GetCancellationToken(cancellationToken)).ConfigureAwait(false);
         }
 
         public async Task<List<ResultWithNavigationProperties>> GetListWithNavigationPropertiesAsync(
@@ -38,23 +31,18 @@ namespace RatTracker.Results
             int skipCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var query = await GetQueryForNavigationPropertiesAsync();
+            var query = await GetQueryForNavigationPropertiesAsync().ConfigureAwait(false);
             query = ApplyFilter(query, filterText, testDateMin, testDateMax, age, outcome, schoolId);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? ResultConsts.GetDefaultSorting(true) : sorting);
-            return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken);
+            return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         protected virtual async Task<IQueryable<ResultWithNavigationProperties>> GetQueryForNavigationPropertiesAsync()
         {
-            return from result in (await GetDbSetAsync())
-                   join school in (await GetDbContextAsync()).Schools on result.SchoolId equals school.Id into schools
+            return from result in (await GetDbSetAsync().ConfigureAwait(false))
+                   join school in (await GetDbContextAsync().ConfigureAwait(false)).Schools on result.SchoolId equals school.Id into schools
                    from school in schools.DefaultIfEmpty()
-
-                   select new ResultWithNavigationProperties
-                   {
-                       Result = result,
-                       School = school
-                   };
+                   select new ResultWithNavigationProperties(result, school);
         }
 
         protected virtual IQueryable<ResultWithNavigationProperties> ApplyFilter(
@@ -86,9 +74,9 @@ namespace RatTracker.Results
             int skipCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetQueryableAsync()), filterText, testDateMin, testDateMax, age, outcome);
+            var query = ApplyFilter((await GetQueryableAsync().ConfigureAwait(false)), filterText, testDateMin, testDateMax, age, outcome);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? ResultConsts.GetDefaultSorting(false) : sorting);
-            return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken);
+            return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<long> GetCountAsync(
@@ -100,9 +88,9 @@ namespace RatTracker.Results
             Guid? schoolId = null,
             CancellationToken cancellationToken = default)
         {
-            var query = await GetQueryForNavigationPropertiesAsync();
+            var query = await GetQueryForNavigationPropertiesAsync().ConfigureAwait(false);
             query = ApplyFilter(query, filterText, testDateMin, testDateMax, age, outcome, schoolId);
-            return await query.LongCountAsync(GetCancellationToken(cancellationToken));
+            return await query.LongCountAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
         }
 
         protected virtual IQueryable<Result> ApplyFilter(

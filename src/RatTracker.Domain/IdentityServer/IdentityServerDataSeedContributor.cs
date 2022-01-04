@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using Volo.Abp.Authorization.Permissions;
@@ -56,16 +53,16 @@ namespace RatTracker.IdentityServer
         {
             using (_currentTenant.Change(context?.TenantId))
             {
-                await _identityResourceDataSeeder.CreateStandardResourcesAsync();
-                await CreateApiResourcesAsync();
-                await CreateApiScopesAsync();
-                await CreateClientsAsync();
+                await _identityResourceDataSeeder.CreateStandardResourcesAsync().ConfigureAwait(false);
+                await CreateApiResourcesAsync().ConfigureAwait(false);
+                await CreateApiScopesAsync().ConfigureAwait(false);
+                await CreateClientsAsync().ConfigureAwait(false);
             }
         }
 
         private async Task CreateApiScopesAsync()
         {
-            await CreateApiScopeAsync("RatTracker");
+            await CreateApiScopeAsync("RatTracker").ConfigureAwait(false);
         }
 
         private async Task CreateApiResourcesAsync()
@@ -80,12 +77,12 @@ namespace RatTracker.IdentityServer
                 "role"
             };
 
-            await CreateApiResourceAsync("RatTracker", commonApiUserClaims);
+            await CreateApiResourceAsync("RatTracker", commonApiUserClaims).ConfigureAwait(false);
         }
 
         private async Task<ApiResource> CreateApiResourceAsync(string name, IEnumerable<string> claims)
         {
-            var apiResource = await _apiResourceRepository.FindByNameAsync(name);
+            var apiResource = await _apiResourceRepository.FindByNameAsync(name).ConfigureAwait(false);
             if (apiResource == null)
             {
                 apiResource = await _apiResourceRepository.InsertAsync(
@@ -95,7 +92,7 @@ namespace RatTracker.IdentityServer
                         name + " API"
                     ),
                     autoSave: true
-                );
+                ).ConfigureAwait(false);
             }
 
             foreach (var claim in claims)
@@ -106,12 +103,12 @@ namespace RatTracker.IdentityServer
                 }
             }
 
-            return await _apiResourceRepository.UpdateAsync(apiResource);
+            return await _apiResourceRepository.UpdateAsync(apiResource).ConfigureAwait(false);
         }
 
         private async Task<ApiScope> CreateApiScopeAsync(string name)
         {
-            var apiScope = await _apiScopeRepository.FindByNameAsync(name);
+            var apiScope = await _apiScopeRepository.FindByNameAsync(name).ConfigureAwait(false);
             if (apiScope == null)
             {
                 apiScope = await _apiScopeRepository.InsertAsync(
@@ -121,7 +118,7 @@ namespace RatTracker.IdentityServer
                         name + " API"
                     ),
                     autoSave: true
-                );
+                ).ConfigureAwait(false);
             }
 
             return apiScope;
@@ -142,7 +139,6 @@ namespace RatTracker.IdentityServer
 
             var configurationSection = _configuration.GetSection("IdentityServer:Clients");
 
-
             //Console Test / Angular Client
             var consoleAndAngularClientId = configurationSection["RatTracker_App:ClientId"];
             if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
@@ -155,14 +151,12 @@ namespace RatTracker.IdentityServer
                     grantTypes: new[] { "password", "client_credentials", "authorization_code" },
                     secret: (configurationSection["RatTracker_App:ClientSecret"] ?? "1q2w3e*").Sha256(),
                     requireClientSecret: false,
-                    redirectUri: webClientRootUrl,
-                    postLogoutRedirectUri: webClientRootUrl,
+                    redirectUri: webClientRootUrl ?? string.Empty,
+                    postLogoutRedirectUri: webClientRootUrl ?? string.Empty,
                     corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
-                );
+                ).ConfigureAwait(false);
             }
-            
-            
-            
+
             // Swagger Client
             var swaggerClientId = configurationSection["RatTracker_Swagger:ClientId"];
             if (!swaggerClientId.IsNullOrWhiteSpace())
@@ -173,11 +167,11 @@ namespace RatTracker.IdentityServer
                     name: swaggerClientId,
                     scopes: commonScopes,
                     grantTypes: new[] { "authorization_code" },
-                    secret: configurationSection["RatTracker_Swagger:ClientSecret"]?.Sha256(),
+                    secret: configurationSection["RatTracker_Swagger:ClientSecret"]?.Sha256() ?? string.Empty,
                     requireClientSecret: false,
                     redirectUri: $"{swaggerRootUrl}/swagger/oauth2-redirect.html",
                     corsOrigins: new[] { swaggerRootUrl.RemovePostFix("/") }
-                );
+                ).ConfigureAwait(false);
             }
         }
 
@@ -185,16 +179,16 @@ namespace RatTracker.IdentityServer
             string name,
             IEnumerable<string> scopes,
             IEnumerable<string> grantTypes,
-            string secret = null,
-            string redirectUri = null,
-            string postLogoutRedirectUri = null,
-            string frontChannelLogoutUri = null,
+            string? secret = null,
+            string? redirectUri = null,
+            string? postLogoutRedirectUri = null,
+            string? frontChannelLogoutUri = null,
             bool requireClientSecret = true,
             bool requirePkce = false,
-            IEnumerable<string> permissions = null,
-            IEnumerable<string> corsOrigins = null)
+            IEnumerable<string>? permissions = null,
+            IEnumerable<string>? corsOrigins = null)
         {
-            var client = await _clientRepository.FindByClientIdAsync(name);
+            var client = await _clientRepository.FindByClientIdAsync(name).ConfigureAwait(false);
             if (client == null)
             {
                 client = await _clientRepository.InsertAsync(
@@ -218,7 +212,7 @@ namespace RatTracker.IdentityServer
                         RequirePkce = requirePkce
                     },
                     autoSave: true
-                );
+                ).ConfigureAwait(false);
             }
 
             foreach (var scope in scopes)
@@ -268,7 +262,7 @@ namespace RatTracker.IdentityServer
                     name,
                     permissions,
                     null
-                );
+                ).ConfigureAwait(false);
             }
 
             if (corsOrigins != null)
@@ -282,7 +276,7 @@ namespace RatTracker.IdentityServer
                 }
             }
 
-            return await _clientRepository.UpdateAsync(client);
+            return await _clientRepository.UpdateAsync(client).ConfigureAwait(false);
         }
     }
 }

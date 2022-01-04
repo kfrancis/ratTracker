@@ -1,6 +1,3 @@
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -9,9 +6,9 @@ using Serilog.Events;
 
 namespace RatTracker.DbMigrator
 {
-    class Program
+    internal class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -27,7 +24,7 @@ namespace RatTracker.DbMigrator
                 .WriteTo.Async(c => c.Console())
                 .CreateLogger();
 
-            await CreateHostBuilder(args).RunConsoleAsync();
+            await CreateHostBuilder(args).RunConsoleAsync().ConfigureAwait(false);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

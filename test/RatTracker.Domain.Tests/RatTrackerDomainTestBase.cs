@@ -1,7 +1,6 @@
-﻿namespace RatTracker
+namespace RatTracker
 {
-    public abstract class RatTrackerDomainTestBase : RatTrackerTestBase<RatTrackerDomainTestModule> 
+    public abstract class RatTrackerDomainTestBase : RatTrackerTestBase<RatTrackerDomainTestModule>
     {
-
     }
 }

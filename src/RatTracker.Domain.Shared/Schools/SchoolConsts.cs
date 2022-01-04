@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace RatTracker.Schools
 {
     public static class SchoolConsts
@@ -6,7 +8,7 @@ namespace RatTracker.Schools
 
         public static string GetDefaultSorting(bool withEntityName)
         {
-            return string.Format(DefaultSorting, withEntityName ? "School." : string.Empty);
+            return string.Format(CultureInfo.CurrentCulture, DefaultSorting, withEntityName ? "School." : string.Empty);
         }
 
         public const int NameMinLength = 5;

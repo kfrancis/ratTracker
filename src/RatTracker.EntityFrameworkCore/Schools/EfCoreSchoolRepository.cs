@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RatTracker.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
-using RatTracker.EntityFrameworkCore;
 
 namespace RatTracker.Schools
 {
@@ -16,7 +11,6 @@ namespace RatTracker.Schools
         public EfCoreSchoolRepository(IDbContextProvider<RatTrackerDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
-
         }
 
         public async Task<List<School>> GetListAsync(
@@ -32,9 +26,9 @@ namespace RatTracker.Schools
             int skipCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetQueryableAsync()), filterText, name, address1, address2, address3, city, postalCode);
+            var query = ApplyFilter((await GetQueryableAsync().ConfigureAwait(false)), filterText, name, address1, address2, address3, city, postalCode);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? SchoolConsts.GetDefaultSorting(false) : sorting);
-            return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken);
+            return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<long> GetCountAsync(
@@ -47,8 +41,8 @@ namespace RatTracker.Schools
             string postalCode = null,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetDbSetAsync()), filterText, name, address1, address2, address3, city, postalCode);
-            return await query.LongCountAsync(GetCancellationToken(cancellationToken));
+            var query = ApplyFilter((await GetDbSetAsync().ConfigureAwait(false)), filterText, name, address1, address2, address3, city, postalCode);
+            return await query.LongCountAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
         }
 
         protected virtual IQueryable<School> ApplyFilter(

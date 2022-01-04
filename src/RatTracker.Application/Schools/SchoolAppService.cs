@@ -1,20 +1,11 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Authorization;
-using Volo.Abp;
+using RatTracker.Permissions;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Repositories;
-using RatTracker.Permissions;
-using RatTracker.Schools;
 
 namespace RatTracker.Schools
 {
-
-    [Authorize(RatTrackerPermissions.Schools.Default)]
+    [Authorize(RatTrackerPermissions.SchoolPermissions.Default)]
     public class SchoolsAppService : ApplicationService, ISchoolsAppService
     {
         private readonly ISchoolRepository _schoolRepository;
@@ -26,8 +17,8 @@ namespace RatTracker.Schools
 
         public virtual async Task<PagedResultDto<SchoolDto>> GetListAsync(GetSchoolsInput input)
         {
-            var totalCount = await _schoolRepository.GetCountAsync(input.FilterText, input.Name, input.Address1, input.Address2, input.Address3, input.City, input.PostalCode);
-            var items = await _schoolRepository.GetListAsync(input.FilterText, input.Name, input.Address1, input.Address2, input.Address3, input.City, input.PostalCode, input.Sorting, input.MaxResultCount, input.SkipCount);
+            var totalCount = await _schoolRepository.GetCountAsync(input.FilterText, input.Name, input.Address1, input.Address2, input.Address3, input.City, input.PostalCode).ConfigureAwait(false);
+            var items = await _schoolRepository.GetListAsync(input.FilterText, input.Name, input.Address1, input.Address2, input.Address3, input.City, input.PostalCode, input.Sorting, input.MaxResultCount, input.SkipCount).ConfigureAwait(false);
 
             return new PagedResultDto<SchoolDto>
             {
@@ -38,32 +29,30 @@ namespace RatTracker.Schools
 
         public virtual async Task<SchoolDto> GetAsync(Guid id)
         {
-            return ObjectMapper.Map<School, SchoolDto>(await _schoolRepository.GetAsync(id));
+            return ObjectMapper.Map<School, SchoolDto>(await _schoolRepository.GetAsync(id).ConfigureAwait(false));
         }
 
-        [Authorize(RatTrackerPermissions.Schools.Delete)]
+        [Authorize(RatTrackerPermissions.SchoolPermissions.Delete)]
         public virtual async Task DeleteAsync(Guid id)
         {
-            await _schoolRepository.DeleteAsync(id);
+            await _schoolRepository.DeleteAsync(id).ConfigureAwait(false);
         }
 
-        [Authorize(RatTrackerPermissions.Schools.Create)]
+        [Authorize(RatTrackerPermissions.SchoolPermissions.Create)]
         public virtual async Task<SchoolDto> CreateAsync(SchoolCreateDto input)
         {
-
             var school = ObjectMapper.Map<SchoolCreateDto, School>(input);
 
-            school = await _schoolRepository.InsertAsync(school, autoSave: true);
+            school = await _schoolRepository.InsertAsync(school, autoSave: true).ConfigureAwait(false);
             return ObjectMapper.Map<School, SchoolDto>(school);
         }
 
-        [Authorize(RatTrackerPermissions.Schools.Edit)]
+        [Authorize(RatTrackerPermissions.SchoolPermissions.Edit)]
         public virtual async Task<SchoolDto> UpdateAsync(Guid id, SchoolUpdateDto input)
         {
-
-            var school = await _schoolRepository.GetAsync(id);
+            var school = await _schoolRepository.GetAsync(id).ConfigureAwait(false);
             ObjectMapper.Map(input, school);
-            school = await _schoolRepository.UpdateAsync(school, autoSave: true);
+            school = await _schoolRepository.UpdateAsync(school, autoSave: true).ConfigureAwait(false);
             return ObjectMapper.Map<School, SchoolDto>(school);
         }
     }

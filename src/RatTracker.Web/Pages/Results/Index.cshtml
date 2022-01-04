@@ -21,7 +21,7 @@
 }
 
 @section content_toolbar {
-    @if (await Authorization.IsGrantedAsync(RatTrackerPermissions.Results.Create))
+    @if (await Authorization.IsGrantedAsync(RatTrackerPermissions.ResultPermissionss.Create))
     {
         <abp-button id="NewResultButton" text="@L["NewResult"].Value" icon="plus" button-type="Primary" />
     }

@@ -1,2 +1,3 @@
-﻿using System.Runtime.CompilerServices;
-[assembly:InternalsVisibleToAttribute("RatTracker.EntityFrameworkCore.Tests")]
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleToAttribute("RatTracker.EntityFrameworkCore.Tests")]

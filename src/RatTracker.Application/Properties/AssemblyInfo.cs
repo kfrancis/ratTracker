@@ -1,2 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-[assembly:InternalsVisibleToAttribute("RatTracker.Application.Tests")]
+using System.Runtime.CompilerServices;
+
+[assembly: CLSCompliant(false)]
+[assembly: InternalsVisibleToAttribute("RatTracker.Application.Tests")]

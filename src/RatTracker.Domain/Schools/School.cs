@@ -1,9 +1,6 @@
-using System;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.Domain.Entities.Auditing;
-using Volo.Abp.MultiTenancy;
 using JetBrains.Annotations;
 using Volo.Abp;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace RatTracker.Schools
 {
@@ -41,11 +38,6 @@ namespace RatTracker.Schools
 
         [CanBeNull]
         public virtual string Website { get; set; }
-
-        public School()
-        {
-
-        }
 
         public School(Guid id, string name, string address1, string address2, string address3, string city, string postalCode, string email, string phone, string schoolFamily, string schoolType, string website)
         {

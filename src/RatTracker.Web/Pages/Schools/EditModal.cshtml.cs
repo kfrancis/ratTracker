@@ -27,14 +27,14 @@ namespace RatTracker.Web.Pages.Schools
 
         public async Task OnGetAsync()
         {
-            var school = await _schoolsAppService.GetAsync(Id);
+            var school = await _schoolsAppService.GetAsync(Id).ConfigureAwait(false);
             School = ObjectMapper.Map<SchoolDto, SchoolUpdateDto>(school);
 
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _schoolsAppService.UpdateAsync(Id, School);
+            await _schoolsAppService.UpdateAsync(Id, School).ConfigureAwait(false);
             return NoContent();
         }
     }

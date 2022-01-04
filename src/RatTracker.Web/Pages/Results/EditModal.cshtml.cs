@@ -1,4 +1,4 @@
-using RatTracker.Shared;
+using RatTracker.Common;
 using RatTracker.Schools;
 using System;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace RatTracker.Web.Pages.Results
 
         public async Task OnGetAsync()
         {
-            var resultWithNavigationPropertiesDto = await _resultsAppService.GetWithNavigationPropertiesAsync(Id);
+            var resultWithNavigationPropertiesDto = await _resultsAppService.GetWithNavigationPropertiesAsync(Id).ConfigureAwait(false);
             Result = ObjectMapper.Map<ResultDto, ResultUpdateDto>(resultWithNavigationPropertiesDto.Result);
 
             School = resultWithNavigationPropertiesDto.School;
@@ -40,7 +40,7 @@ namespace RatTracker.Web.Pages.Results
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _resultsAppService.UpdateAsync(Id, Result);
+            await _resultsAppService.UpdateAsync(Id, Result).ConfigureAwait(false);
             return NoContent();
         }
     }

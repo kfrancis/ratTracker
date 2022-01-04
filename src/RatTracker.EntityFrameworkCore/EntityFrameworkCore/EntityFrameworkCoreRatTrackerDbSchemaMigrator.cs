@@ -1,5 +1,3 @@
-﻿using System;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RatTracker.Data;
@@ -29,7 +27,7 @@ namespace RatTracker.EntityFrameworkCore
             await _serviceProvider
                 .GetRequiredService<RatTrackerDbContext>()
                 .Database
-                .MigrateAsync();
+                .MigrateAsync().ConfigureAwait(false);
         }
     }
 }

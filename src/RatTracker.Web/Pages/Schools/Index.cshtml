@@ -21,7 +21,7 @@
 }
 
 @section content_toolbar {
-    @if (await Authorization.IsGrantedAsync(RatTrackerPermissions.Schools.Create))
+    @if (await Authorization.IsGrantedAsync(RatTrackerPermissions.SchoolPermissions.Create))
     {
         <abp-button id="NewSchoolButton" text="@L["NewSchool"].Value" icon="plus" button-type="Primary" />
     }

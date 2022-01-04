@@ -23,6 +23,8 @@
     "TestDate": "Date of Rapid Antigen Test",
     "AgeOfTestedIndividual": "Age Of Tested Individual",
     "ReportResult": "Report A Result",
-    "SubmitResult": "Submit Result"
+    "SubmitResult": "Submit Result",
+    "PleaseSelect": "Please select an option"
+
   }
 }

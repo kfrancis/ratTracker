@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Globalization;
 using Localization.Resources.AbpUi;
 using Microsoft.AspNetCore.Builder;

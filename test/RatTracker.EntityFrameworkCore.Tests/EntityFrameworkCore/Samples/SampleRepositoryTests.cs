@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Shouldly;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Xunit;
@@ -14,6 +11,7 @@ namespace RatTracker.EntityFrameworkCore.Samples
      * (like default AppUser repository IRepository<AppUser, Guid> here).
      * Only test your custom repository methods.
      */
+
     public class SampleRepositoryTests : RatTrackerEntityFrameworkCoreTestBase
     {
         private readonly IRepository<IdentityUser, Guid> _appUserRepository;
@@ -32,13 +30,13 @@ namespace RatTracker.EntityFrameworkCore.Samples
             await WithUnitOfWorkAsync(async () =>
             {
                 //Act
-                var adminUser = await (await _appUserRepository.GetQueryableAsync())
+                var adminUser = await (await _appUserRepository.GetQueryableAsync().ConfigureAwait(false))
                     .Where(u => u.UserName == "admin")
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync().ConfigureAwait(false);
 
                 //Assert
                 adminUser.ShouldNotBeNull();
-            });
+            }).ConfigureAwait(false);
         }
     }
 }

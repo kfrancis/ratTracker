@@ -1,16 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using Microsoft.ML;
-using static Microsoft.ML.DataOperationsCatalog;
 using Microsoft.ML.Vision;
+using static Microsoft.ML.DataOperationsCatalog;
 
 namespace RatTracker.DeepLearning.ImageClassification
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var projectDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
             var workspaceRelativePath = Path.Combine(projectDirectory, "workspace");
@@ -136,25 +136,25 @@ namespace RatTracker.DeepLearning.ImageClassification
         }
     }
 
-    class ImageData
+    internal class ImageData
     {
         public string ImagePath { get; set; }
 
         public string Label { get; set; }
     }
 
-    class ModelInput
+    internal class ModelInput
     {
         public byte[] Image { get; set; }
 
-        public UInt32 LabelAsKey { get; set; }
+        public uint LabelAsKey { get; set; }
 
         public string ImagePath { get; set; }
 
         public string Label { get; set; }
     }
 
-    class ModelOutput
+    internal class ModelOutput
     {
         public string ImagePath { get; set; }
 

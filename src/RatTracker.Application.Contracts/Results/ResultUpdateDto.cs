@@ -1,5 +1,3 @@
-using RatTracker.Results;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace RatTracker.Results
@@ -8,10 +6,13 @@ namespace RatTracker.Results
     {
         [Required]
         public DateTime TestDate { get; set; }
+
         [Required]
         public AgeBrackets Age { get; set; }
+
         [Required]
         public TestOutcome Outcome { get; set; }
+
         public Guid SchoolId { get; set; }
     }
 }

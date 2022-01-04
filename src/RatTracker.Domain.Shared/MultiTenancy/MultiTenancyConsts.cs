@@ -1,4 +1,4 @@
-﻿namespace RatTracker.MultiTenancy
+namespace RatTracker.MultiTenancy
 {
     public static class MultiTenancyConsts
     {

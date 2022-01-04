@@ -1,4 +1,3 @@
-﻿using System.Threading.Tasks;
 using Shouldly;
 using Volo.Abp.Identity;
 using Xunit;
@@ -10,6 +9,7 @@ namespace RatTracker.Samples
      * (like IdentityUserManager here).
      * Only test your own domain services.
      */
+
     public class SampleDomainTests : RatTrackerDomainTestBase
     {
         private readonly IIdentityUserRepository _identityUserRepository;
@@ -32,13 +32,13 @@ namespace RatTracker.Samples
             await WithUnitOfWorkAsync(async () =>
             {
                 adminUser = await _identityUserRepository
-                    .FindByNormalizedUserNameAsync("ADMIN");
+                    .FindByNormalizedUserNameAsync("ADMIN").ConfigureAwait(false);
 
-                await _identityUserManager.SetEmailAsync(adminUser, "newemail@abp.io");
-                await _identityUserRepository.UpdateAsync(adminUser);
-            });
+                await _identityUserManager.SetEmailAsync(adminUser, "newemail@abp.io").ConfigureAwait(false);
+                await _identityUserRepository.UpdateAsync(adminUser).ConfigureAwait(false);
+            }).ConfigureAwait(false);
 
-            adminUser = await _identityUserRepository.FindByNormalizedUserNameAsync("ADMIN");
+            adminUser = await _identityUserRepository.FindByNormalizedUserNameAsync("ADMIN").ConfigureAwait(false);
             adminUser.Email.ShouldBe("newemail@abp.io");
         }
     }

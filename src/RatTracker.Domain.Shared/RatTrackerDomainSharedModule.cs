@@ -1,4 +1,4 @@
-﻿using RatTracker.Localization;
+using RatTracker.Localization;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.FeatureManagement;

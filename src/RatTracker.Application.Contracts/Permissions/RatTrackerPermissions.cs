@@ -4,6 +4,7 @@
     {
         public const string GroupName = "RatTracker";
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "It's how ABP sets this up")]
         public static class Dashboard
         {
             public const string DashboardGroup = GroupName + ".Dashboard";
@@ -14,7 +15,8 @@
         //Add your own permission names. Example:
         //public const string MyPermission1 = GroupName + ".MyPermission1";
 
-        public class Schools
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "It's how ABP sets this up")]
+        public static class SchoolPermissions
         {
             public const string Default = GroupName + ".Schools";
             public const string Edit = Default + ".Edit";
@@ -22,7 +24,8 @@
             public const string Delete = Default + ".Delete";
         }
 
-        public class Results
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "It's how ABP sets this up")]
+        public static class ResultPermissionss
         {
             public const string Default = GroupName + ".Results";
             public const string Edit = Default + ".Edit";

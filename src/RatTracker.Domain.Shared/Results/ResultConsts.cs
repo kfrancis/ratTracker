@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace RatTracker.Results
 {
     public static class ResultConsts
@@ -6,8 +8,7 @@ namespace RatTracker.Results
 
         public static string GetDefaultSorting(bool withEntityName)
         {
-            return string.Format(DefaultSorting, withEntityName ? "Result." : string.Empty);
+            return string.Format(CultureInfo.CurrentCulture, DefaultSorting, withEntityName ? "Result." : string.Empty);
         }
-
     }
 }

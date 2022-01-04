@@ -8,7 +8,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using RatTracker.Results;
-using RatTracker.Shared;
+using RatTracker.Common;
 
 namespace RatTracker.Web.Pages.Results
 {
@@ -39,10 +39,10 @@ namespace RatTracker.Web.Pages.Results
                     await _resultsAppService.GetSchoolLookupAsync(new LookupRequestDto
                     {
                         MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount
-                    })).Items.Select(t => new SelectListItem(t.DisplayName, t.Id.ToString())).ToList()
+                    }).ConfigureAwait(false)).Items.Select(t => new SelectListItem(t.DisplayName, t.Id.ToString())).ToList()
             );
 
-            await Task.CompletedTask;
+            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }

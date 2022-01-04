@@ -1,4 +1,4 @@
-﻿namespace RatTracker.Results
+namespace RatTracker.Results
 {
     public enum TestOutcome
     {

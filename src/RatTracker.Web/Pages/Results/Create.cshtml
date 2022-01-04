@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using Microsoft.AspNetCore.Authorization
 @using Volo.Abp.AspNetCore.Mvc.UI.Layout
 @using RatTracker.Permissions
@@ -6,60 +6,80 @@
 @using RatTracker.Web.Menus
 @using Microsoft.AspNetCore.Mvc.Localization
 @using RatTracker.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Theming
+@using RatTracker.Web.Components.Kendo
 @using Owl.reCAPTCHA
+@inject IThemeManager ThemeManager
 @inject IHtmlLocalizer<RatTrackerResource> L
 @inject IAuthorizationService Authorization
 @model CreateModel
 @inject IPageLayout PageLayout
 @{
-    Layout = null;
+    Layout = ThemeManager.CurrentTheme.GetLayout(StandardLayouts.Empty);
 }
 
 <h1>@L["ReportResult"].Value</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form data-ajaxForm="true" asp-page="/Results/Create" autocomplete="off">
+    <div class="col">
+        <form data-ajaxForm="true" asp-page="/Results/Create" autocomplete="off" class="needs-validation" novalidate>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-floating mb-3">
-                <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" asp-for="Result.TestDate" required max="@DateTime.Now.ToString("yyyy-MM-dd")">
-                <label asp-for="Result.TestDate" class="form-label">@L["TestDate"]*</label>
+            <div class="row mb-3">
+                <label asp-for="Result.TestDate" class="col-sm-4 col-md-4 col-form-label">@L["TestDate"]*</label>
+                <div class="col-sm-8 col-md-8">
+                    <input type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" asp-for="Result.TestDate" required max="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")">
+                </div>
             </div>
 
-            <div class="form-floating mb-3">
-                <select asp-for="Result.Age" class="form-control" required>
-                    <option selected>@L["PleaseSelect"].Value</option>
-                    <option value="1">@L["BracketA"].Value</option>
-                    <option value="2">@L["BracketB"].Value</option>
-                    <option value="3">@L["BracketC"].Value</option>
-                    <option value="4">@L["BracketD"].Value</option>
-                    <option value="5">@L["BracketE"].Value</option>
-                    <option value="6">@L["BracketF"].Value</option>
-                    <option value="7">@L["BracketG"].Value</option>
-                    <option value="8">@L["BracketH"].Value</option>
-                    <option value="9">@L["BracketI"].Value</option>
-                    <option value="10">@L["BracketJ"].Value</option>
-                    <option value="11">@L["BracketK"].Value</option>
-                    <option value="12">@L["BracketL"].Value</option>
-                    <option value="13">@L["BracketM"].Value</option>
-                    <option value="14">@L["BracketN"].Value</option>
-                    <option value="15">@L["BracketO"].Value</option>
-                    <option value="16">@L["BracketP"].Value</option>
-                </select>
-                <label for="Result_Age">@L["AgeOfTestedIndividual"]</label>
+            <div class="row mb-3">
+                <label for="Result_Age" class="col-sm-4 col-form-label">@L["AgeOfTestedIndividual"]</label>
+                <div class="col-sm-8">
+                    <select asp-for="Result.Age" class="form-control" required>
+                        <option selected value="">@L["PleaseSelect"].Value</option>
+                        <option value="1">@L["BracketA"].Value</option>
+                        <option value="2">@L["BracketB"].Value</option>
+                        <option value="3">@L["BracketC"].Value</option>
+                        <option value="4">@L["BracketD"].Value</option>
+                        <option value="5">@L["BracketE"].Value</option>
+                        <option value="6">@L["BracketF"].Value</option>
+                        <option value="7">@L["BracketG"].Value</option>
+                        <option value="8">@L["BracketH"].Value</option>
+                        <option value="9">@L["BracketI"].Value</option>
+                        <option value="10">@L["BracketJ"].Value</option>
+                        <option value="11">@L["BracketK"].Value</option>
+                        <option value="12">@L["BracketL"].Value</option>
+                        <option value="13">@L["BracketM"].Value</option>
+                        <option value="14">@L["BracketN"].Value</option>
+                        <option value="15">@L["BracketO"].Value</option>
+                        <option value="16">@L["BracketP"].Value</option>
+                    </select>
+                </div>
             </div>
 
-            <abp-select asp-for="Result.Outcome" />
-
-            <div class="form-floating mb-3">                
-                <select id="Result_SchoolId"
-                        class="form-control"
-                        name="Result.SchoolId"
-                        data-value="@Model.Result.SchoolId" required>
-                </select>
-                <label for="Result_SchoolId">@L["School"]</label>
+            <div class="row mb-3">
+                <label for="Result_Outcome" class="col-sm-4 col-form-label">@L["Outcome"]</label>
+                <div class="col-sm-8">
+                    <select asp-for="Result.Outcome" class="form-control" required>
+                        <option selected value="">@L["PleaseSelect"].Value</option>
+                        <option value="1">@L["Positive"].Value</option>
+                        <option value="2">@L["Negative"].Value</option>
+                    </select>
+                </div>
             </div>
+
+            <div class="row mb-3">
+                <label for="Result_SchoolId" class="col-sm-4 col-form-label">@L["School"]</label>
+                <div class="col-sm-8">
+                    <select id="Result_SchoolId"
+                            class="form-control"
+                            name="Result.SchoolId"
+                            data-value="@Model.Result.SchoolId" required>
+                            <option value="2" selected>@L["Negative"].Value</option>
+                    </select>
+                </div>
+            </div>
+
             <input asp-for="Result.Token" type="hidden" />
             <input type="submit" value="@L["SubmitResult"].Value" class="btn btn-primary" />
         </form>
@@ -77,7 +97,5 @@
 </div>
 
 @section Scripts {
-    @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+    <abp-script src="/Pages/Results/create.js" />
 }
