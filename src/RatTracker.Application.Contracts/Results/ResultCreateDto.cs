@@ -13,5 +13,7 @@ namespace RatTracker.Results
         [Required]
         public TestOutcome Outcome { get; set; } = ((TestOutcome[])Enum.GetValues(typeof(TestOutcome)))[0];
         public Guid SchoolId { get; set; }
+        [Required]
+        public string Token { get; set; }
     }
 }

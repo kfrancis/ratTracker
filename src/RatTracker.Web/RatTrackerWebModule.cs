@@ -41,6 +41,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Bundling;
 using RatTracker.Web.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Components.LayoutHook;
 using RatTracker.Web.Components.Kendo;
+using Owl.reCAPTCHA;
 
 namespace RatTracker.Web
 {
@@ -91,6 +92,16 @@ namespace RatTracker.Web
             ConfigureSwaggerServices(context.Services);
             ConfigureKendo(context.Services);
             ConfigureLayoutChanges(configuration);
+            ConfigureRecaptcha(context.Services, configuration);
+        }
+
+        private void ConfigureRecaptcha(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddreCAPTCHAV3(x =>
+            {
+                x.SiteKey = configuration["ReCaptchaV3:SiteKey"];
+                x.SiteSecret = configuration["ReCaptchaV3:SecretKey"];
+            });
         }
 
         private void ConfigureLayoutChanges(IConfiguration configuration)

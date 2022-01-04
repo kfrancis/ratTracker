@@ -6,6 +6,7 @@
 @using RatTracker.Web.Menus
 @using Microsoft.AspNetCore.Mvc.Localization
 @using RatTracker.Localization
+@using Owl.reCAPTCHA
 @inject IHtmlLocalizer<RatTrackerResource> L
 @inject IAuthorizationService Authorization
 @model CreateModel
@@ -59,9 +60,19 @@
                 </select>
                 <label for="Result_SchoolId">@L["School"]</label>
             </div>
-
+            <input asp-for="Result.Token" type="hidden" />
             <input type="submit" value="@L["SubmitResult"].Value" class="btn btn-primary" />
         </form>
+
+        <recaptcha-script-v3 />
+
+        <script>
+            function callback(token) {
+                document.getElementById("Result_Token").value = token;
+            }
+        </script>
+
+        <recaptcha-script-v3-js action="login" callback="callback" />
     </div>
 </div>
 
