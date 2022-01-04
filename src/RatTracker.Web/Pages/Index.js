@@ -6,6 +6,17 @@ $(function () {
         var emptyTemplate = kendo.template($("#empty-info-template").html());
         var activeShape;
 
+        var markerData = new kendo.data.DataSource({
+            transport: {
+                read: function (opts) {
+                    var centerPoint = $("#map").data("kendoMap").options.center;
+                    window.ratTracker.schools.schools.getGeoCoordinate(centerPoint[0], centerPoint[1]).then(function (result) {
+                        opts.success(result);
+                    });
+                }
+            }
+        });
+
         $("#map").kendoMap({
             center: [44.2471971, -76.5796658],
             zoom: 12,
@@ -15,29 +26,14 @@ $(function () {
                 subdomains: ["a", "b", "c"],
                 attribution: "&copy; <a href='https://osm.org/copyright'>OpenStreetMap contributors</a>"
             }, {
-                type: "bubble",
-                attribution: "Population data from Nordpil and UN Population Division.",
-                style: {
-                    fill: {
-                        color: "#00f",
-                        opacity: 0.4
-                    },
-                    stroke: {
-                        width: 0
-                    }
-                },
-                dataSource: {
-                    transport: {
-                        read: {
-                            url: "../content/dataviz/map/urban-areas.json",
-                            dataType: "json"
-                        }
-                    }
-                },
-                locationField: "Location",
-                valueField: "Pop2010"
+                type: "marker",
+                dataSource: markerData,
+                locationField: "latLng",
+                titleField: "name"
             }]
         });
+        $("#map").unbind("mousewheel");
+        $("#map").unbind("DOMMouseScroll");
     }
     $(document).ready(createMap);
 });

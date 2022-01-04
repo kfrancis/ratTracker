@@ -1,4 +1,4 @@
-﻿using Volo.Abp.Ui.Branding;
+using Volo.Abp.Ui.Branding;
 using Volo.Abp.DependencyInjection;
 
 namespace RatTracker.Web

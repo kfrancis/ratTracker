@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using NetTopologySuite.Geometries;
 using RatTracker.Permissions;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -54,6 +55,20 @@ namespace RatTracker.Schools
             ObjectMapper.Map(input, school);
             school = await _schoolRepository.UpdateAsync(school, autoSave: true).ConfigureAwait(false);
             return ObjectMapper.Map<School, SchoolDto>(school);
+        }
+
+        public virtual async Task<IEnumerable<GeoCoordinate>> GetGeoCoordinateAsync(double lat, double lng)
+        {
+            var centerPoint = new Point(lng, lat)
+            {
+                SRID = SchoolConsts.SRID
+            };
+            var schools = await _schoolRepository.GetListAsync(isGeoLocated: true).ConfigureAwait(false);
+            // within 20km
+            return schools
+                .Where(x => x.Location != null && x.Location.Distance(centerPoint) <= 20000)
+                .OrderBy(x => x.Location.Distance(centerPoint))
+                .Select(x => new GeoCoordinate(x.Location.Coordinate.Y, x.Location.Coordinate.X, x.Name));
         }
     }
 }

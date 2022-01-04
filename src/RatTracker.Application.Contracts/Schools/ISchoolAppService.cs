@@ -14,5 +14,7 @@ namespace RatTracker.Schools
         Task<SchoolDto> CreateAsync(SchoolCreateDto input);
 
         Task<SchoolDto> UpdateAsync(Guid id, SchoolUpdateDto input);
+
+        Task<IEnumerable<GeoCoordinate>> GetGeoCoordinateAsync(double lat, double lng);
     }
 }

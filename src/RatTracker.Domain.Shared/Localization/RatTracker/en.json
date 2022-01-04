@@ -3,7 +3,7 @@
   "texts": {
     "Menu:Home": "Home",
     "Welcome": "Welcome",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    "LongWelcomeMessage": "A citizen-powered tool for anonymous reporting of COVID-19 rapid antigen test results in Kingston schools",
     "BracketA": "0-4",
     "BracketB": "5-11",
     "BracketC": "12-17",

@@ -15,7 +15,8 @@ namespace RatTracker
              * into multiple profile classes for a better organization. */
             CreateMap<SchoolCreateDto, School>().IgnoreFullAuditedObjectProperties().Ignore(x => x.ExtraProperties).Ignore(x => x.ConcurrencyStamp).Ignore(x => x.Id);
             CreateMap<SchoolUpdateDto, School>().IgnoreFullAuditedObjectProperties().Ignore(x => x.ExtraProperties).Ignore(x => x.ConcurrencyStamp).Ignore(x => x.Id);
-            CreateMap<School, SchoolDto>();
+            CreateMap<School, SchoolDto>()
+                .ForMember(dest => dest.IsGeocoded, opt => opt.MapFrom(src => src.Location != null));
 
             CreateMap<ResultCreateDto, Result>().IgnoreFullAuditedObjectProperties().Ignore(x => x.Id);
             CreateMap<ResultUpdateDto, Result>().IgnoreFullAuditedObjectProperties().Ignore(x => x.Id);
