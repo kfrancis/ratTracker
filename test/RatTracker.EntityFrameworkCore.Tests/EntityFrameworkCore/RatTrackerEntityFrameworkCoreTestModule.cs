@@ -32,7 +32,7 @@ namespace RatTracker.EntityFrameworkCore
             {
                 options.Configure(context =>
                 {
-                    context.DbContextOptions.UseSqlite(_sqliteConnection);
+                    context.DbContextOptions.UseSqlite(_sqliteConnection, opt => opt.UseNetTopologySuite());
                 });
             });
         }
@@ -48,7 +48,7 @@ namespace RatTracker.EntityFrameworkCore
             connection.Open();
 
             var options = new DbContextOptionsBuilder<RatTrackerDbContext>()
-                .UseSqlite(connection)
+                .UseSqlite(connection, opt => opt.UseNetTopologySuite())
                 .Options;
 
             using (var context = new RatTrackerDbContext(options))

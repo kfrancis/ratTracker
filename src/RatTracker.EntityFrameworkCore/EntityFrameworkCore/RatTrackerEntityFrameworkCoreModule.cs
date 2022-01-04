@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RatTracker.Results;
 using RatTracker.Schools;
@@ -51,7 +52,7 @@ namespace RatTracker.EntityFrameworkCore
             {
                 /* The main point to change your DBMS.
                  * See also RatTrackerMigrationsDbContextFactory for EF Core tooling. */
-                options.UseSqlServer();
+                options.UseSqlServer(opt => opt.UseNetTopologySuite());
             });
         }
     }

@@ -1,47 +1,38 @@
-using System;
-using System.IO;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Hangfire;
+using Hangfire.SqlServer;
+using Microsoft.OpenApi.Models;
+using Owl.reCAPTCHA;
 using RatTracker.EntityFrameworkCore;
 using RatTracker.Localization;
 using RatTracker.MultiTenancy;
+using RatTracker.Web.Bundling;
+using RatTracker.Web.Components.Kendo;
 using RatTracker.Web.Menus;
-using Microsoft.OpenApi.Models;
 using Volo.Abp;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.Localization;
-using Volo.Abp.AspNetCore.Mvc.UI;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
-using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
+using Volo.Abp.AspNetCore.Mvc.UI.Components.LayoutHook;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Bundling;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
-using Volo.Abp.FeatureManagement;
+using Volo.Abp.BackgroundJobs.Hangfire;
+using Volo.Abp.Hangfire;
 using Volo.Abp.Identity.Web;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
-using Volo.Abp.PermissionManagement.Web;
 using Volo.Abp.SettingManagement.Web;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.Web;
-using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
+using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Bundling;
-using RatTracker.Web.Bundling;
-using Volo.Abp.AspNetCore.Mvc.UI.Components.LayoutHook;
-using RatTracker.Web.Components.Kendo;
-using Owl.reCAPTCHA;
 
 namespace RatTracker.Web
 {
@@ -59,6 +50,7 @@ namespace RatTracker.Web
         typeof(AbpAspNetCoreSerilogModule),
         typeof(AbpSwashbuckleModule)
         )]
+    [DependsOn(typeof(AbpBackgroundJobsHangfireModule))]
     public class RatTrackerWebModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
@@ -93,6 +85,16 @@ namespace RatTracker.Web
             ConfigureKendo(context.Services);
             ConfigureLayoutChanges(configuration);
             ConfigureRecaptcha(context.Services, configuration);
+            ConfigureHangfire(context, configuration);
+        }
+
+        private void ConfigureHangfire(ServiceConfigurationContext context, IConfiguration configuration)
+        {
+            context.Services.AddHangfire(config =>
+            {
+                config.UseSqlServerStorage(configuration.GetConnectionString("Default"));
+            });
+            JobStorage.Current = new SqlServerStorage(configuration.GetConnectionString("Default"));
         }
 
         private void ConfigureRecaptcha(IServiceCollection services, IConfiguration configuration)
@@ -261,6 +263,7 @@ namespace RatTracker.Web
             app.UseAuthentication();
             app.UseJwtTokenMiddleware();
 
+
             if (MultiTenancyConsts.IsEnabled)
             {
                 app.UseMultiTenancy();
@@ -276,7 +279,12 @@ namespace RatTracker.Web
             });
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                AsyncAuthorization = new[] { new AbpHangfireAuthorizationFilter() }
+            });
             app.UseConfiguredEndpoints();
+
         }
     }
 }

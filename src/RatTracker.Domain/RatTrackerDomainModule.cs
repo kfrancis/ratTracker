@@ -13,6 +13,7 @@ using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.PermissionManagement.IdentityServer;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Abp.BackgroundJobs.Hangfire;
 
 [assembly: CLSCompliant(false)]
 
@@ -31,6 +32,7 @@ namespace RatTracker
         typeof(AbpTenantManagementDomainModule),
         typeof(AbpEmailingModule)
     )]
+    [DependsOn(typeof(AbpBackgroundJobsHangfireModule))]
     public class RatTrackerDomainModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)

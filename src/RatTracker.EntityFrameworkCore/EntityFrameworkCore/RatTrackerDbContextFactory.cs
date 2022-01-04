@@ -16,7 +16,7 @@ namespace RatTracker.EntityFrameworkCore
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<RatTrackerDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+                .UseSqlServer(configuration.GetConnectionString("Default"), opt => opt.UseNetTopologySuite());
 
             return new RatTrackerDbContext(builder.Options);
         }

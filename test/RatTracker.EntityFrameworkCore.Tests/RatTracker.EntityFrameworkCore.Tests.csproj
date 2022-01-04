@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\RatTracker.EntityFrameworkCore\RatTracker.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\RatTracker.TestBase\RatTracker.TestBase.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="6.0.1" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.0.1" />
   </ItemGroup>
 

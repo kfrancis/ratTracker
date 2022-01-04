@@ -15,6 +15,7 @@ namespace RatTracker.Schools
             string? sorting = null,
             int maxResultCount = int.MaxValue,
             int skipCount = 0,
+            bool? isGeoLocated = null,
             CancellationToken cancellationToken = default
         );
 

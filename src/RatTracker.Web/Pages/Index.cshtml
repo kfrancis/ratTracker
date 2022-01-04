@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using Microsoft.AspNetCore.Mvc.Localization
 @using RatTracker.Localization
 @using RatTracker.Web.Components.Kendo
@@ -12,15 +12,18 @@
 @section scripts {
     @await Component.InvokeAsync(typeof(KendoViewComponent))
     <abp-script src="/Pages/Index.js" />
+    <script id="info-template" type="text/x-kendo-template">
+        <h4>#: City #, #= Country #</h4>
+        <p class="info">Population #= kendo.toString(Pop2010 * 1000, "N0") #</p>
+    </script>
+    <script id="empty-info-template" type="text/x-kendo-template">
+        <h4>Hover over urban areas</h4>
+        <p>&nbsp;</p>
+    </script>
 }
 <div class="container">
     <div class="p-5 text-center">
-        <h1>Welcome to the Application</h1>
-
-        <p class="lead px-lg-5 mx-lg-5">@L["LongWelcomeMessage"]</p>
-
         <div id="map"></div>
-
     </div>
 
 </div>

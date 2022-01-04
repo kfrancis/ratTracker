@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+using AutoMapper;
+using RatTracker.Results;
+using RatTracker.Schools;
 
 namespace RatTracker.Web
 {
@@ -6,7 +8,8 @@ namespace RatTracker.Web
     {
         public RatTrackerWebAutoMapperProfile()
         {
-            //Define your AutoMapper configuration here for the Web project.
+            CreateMap<SchoolDto, SchoolUpdateDto>();
+            CreateMap<ResultDto, ResultUpdateDto>();
         }
     }
 }

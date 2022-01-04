@@ -5,7 +5,7 @@
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
 		<AbpProjectType>app</AbpProjectType>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<!--<Nullable>enable</Nullable>-->
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>

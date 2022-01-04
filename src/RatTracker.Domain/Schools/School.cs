@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using NetTopologySuite.Geometries;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -38,6 +39,9 @@ namespace RatTracker.Schools
 
         [CanBeNull]
         public virtual string Website { get; set; }
+
+        [CanBeNull]
+        public Geometry Location { get; set; } = null!;
 
         public School(Guid id, string name, string address1, string address2, string address3, string city, string postalCode, string email, string phone, string schoolFamily, string schoolType, string website)
         {

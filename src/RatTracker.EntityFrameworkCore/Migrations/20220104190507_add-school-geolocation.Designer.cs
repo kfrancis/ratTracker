@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using RatTracker.EntityFrameworkCore;
@@ -13,9 +14,10 @@ using Volo.Abp.EntityFrameworkCore;
 namespace RatTracker.Migrations
 {
     [DbContext(typeof(RatTrackerDbContext))]
-    partial class RatTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220104190507_add-school-geolocation")]
+    partial class addschoolgeolocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

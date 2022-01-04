@@ -24,7 +24,15 @@
     "AgeOfTestedIndividual": "Age Of Tested Individual",
     "ReportResult": "Report A Result",
     "SubmitResult": "Submit Result",
-    "PleaseSelect": "Please select an option"
-
+    "PleaseSelect": "Please select an option",
+    "Menu:Schools": "Schools",
+    "Menu:Results": "Results",
+    "Name": "Name",
+    "Address1": "Address 1",
+    "Address2": "Address 2",
+    "Address3": "Address 3",
+    "City": "City",
+    "PostalCode": "Postal Code",
+    "SeeAdvancedFilters": "See Advanced Filters"
   }
 }

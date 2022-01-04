@@ -27,5 +27,6 @@ namespace RatTracker.Schools
         public const int CityMinLength = 0;
         public const int CityMaxLength = 100;
         public const string PostalCodeRegex = @"/^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i";
+        public const int SRID = 4326; // WGS84 (i.e. lat/long)
     }
 }
