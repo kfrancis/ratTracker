@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
-using Newtonsoft.Json.Linq;
 using Volo.Abp.BackgroundWorkers;
 using Volo.Abp.Threading;
 
@@ -45,7 +44,7 @@ namespace RatTracker.Schools
 
             var configuration = workerContext.ServiceProvider.GetRequiredService<IConfiguration>();
 
-            // TODO: Geocode and save result
+            // Geocode and save result
             var schoolsToGeocode = await schoolRepository.GetListAsync(isGeoLocated: false, maxResultCount: 5).ConfigureAwait(false);
             var progress = _progressBarFactory.Create("Test");
             for (var i = 0; i < schoolsToGeocode.Count - 1; i++)

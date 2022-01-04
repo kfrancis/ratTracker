@@ -5,9 +5,11 @@ Inspired by the work here https://thelocal.to/rat-tracker but I'm using some per
 
 ## Requirements
 
+- [X] School addresses entered into the system
+- [X] Geocoding addresses so that pins can be placed on the map
+- [X] PII needs to be non-existent, to make this as deployable as possible.
 - [ ] Needs to record Rapid Antigen Test (RAT) results.
 - [ ] A map needs to be generated showing results by school.
-- [ ] PII needs to be non-existent, to make this as deployable as possible.
 - [ ] Verification, in some fashion. Possibly temporal QR code, take picture of RAT beside code to verify. Pictures are not stored, only processed.
 - [ ] (optional) Quick Mobile app? Or at the VERY least something that's usable on mobile easily.
 - [ ] (optional) Push notifications, daily, weekly showing changes.
