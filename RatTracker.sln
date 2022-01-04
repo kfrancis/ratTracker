@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29020.237
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatTracker.Domain", "src\RatTracker.Domain\RatTracker.Domain.csproj", "{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}"
 EndProject
@@ -39,9 +39,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatTracker.DbMigrator", "sr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B7B78CC7-3198-475F-AC96-0083DE128ED0}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		global.json = global.json
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatTracker.DeepLearning.ImageClassification", "src\ConsoleApp1\RatTracker.DeepLearning.ImageClassification.csproj", "{5820C6E4-30BD-4ABC-9FB3-B20D01F88ECA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +112,10 @@ Global
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5820C6E4-30BD-4ABC-9FB3-B20D01F88ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5820C6E4-30BD-4ABC-9FB3-B20D01F88ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5820C6E4-30BD-4ABC-9FB3-B20D01F88ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5820C6E4-30BD-4ABC-9FB3-B20D01F88ECA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +136,7 @@ Global
 		{E512F4D9-9375-480F-A2F6-A46509F9D824} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
 		{EF480016-9127-4916-8735-D2466BDBC582} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
+		{5820C6E4-30BD-4ABC-9FB3-B20D01F88ECA} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}

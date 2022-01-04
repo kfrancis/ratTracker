@@ -1,0 +1,84 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <StartupObject>RatTracker.DeepLearning.ImageClassification.Program</StartupObject>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.ML" Version="1.7.0" />
+		<PackageReference Include="Microsoft.ML.ImageAnalytics" Version="1.7.0" />
+		<PackageReference Include="Microsoft.ML.Vision" Version="1.7.0" />
+		<PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.3.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="assets\NT\" />
+		<Folder Include="assets\PT\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="assets\NT\FH-UxGPXIAAEOAx.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FH0QbAIWYAAqnMX.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FH2NMoXXoAYeAYE.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FH851_XXsAMlKha.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FH8UhI9XwAAflHg.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FH9JrbsWQAMg3Ix.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FH9q5wgVEAE5Sx1.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FICFAHbXEAcrRfa.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FIDgXSAagAUOoNS.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FIDo5TzXsAw342i.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\NT\FIOO9v3WQAA-Z1Z.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\PT\FH70D55XMAMq90-.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\PT\FH87xljVIAQzPcd.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\PT\FICTRqvWUAAGSKG.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\PT\FICw80QVcAAqJoZ.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\PT\FII_pqJVIAIEB78.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\PT\FIMR9XGVEAI2-NT.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\PT\FINyKU3XsAE0nL1.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="assets\PT\FIO_n0oVIAE7-P5.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="workspace\leaveme.txt">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>

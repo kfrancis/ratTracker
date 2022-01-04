@@ -12,9 +12,9 @@
 @model CreateModel
 @inject IPageLayout PageLayout
 @{
-    PageLayout.Content.Title = L["Results"].Value;
-    PageLayout.Content.MenuItemName = RatTrackerMenus.Results;
+    Layout = null;
 }
+
 <h1>@L["ReportResult"].Value</h1>
 <hr />
 <div class="row">
