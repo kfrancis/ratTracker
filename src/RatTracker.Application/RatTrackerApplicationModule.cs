@@ -1,3 +1,4 @@
+using Hangfire.Console.Extensions;
 using RatTracker.Schools;
 using Volo.Abp;
 using Volo.Abp.Account;
@@ -28,10 +29,16 @@ namespace RatTracker
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             Configure<AbpAutoMapperOptions>(options =>
             {
                 options.AddMaps<RatTrackerApplicationModule>();
             });
+            context.Services.AddHangfireConsoleExtensions();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

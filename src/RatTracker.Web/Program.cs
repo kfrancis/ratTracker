@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Hangfire.Console.Extensions.Serilog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -17,10 +18,16 @@ namespace RatTracker.Web
 #else
                 .MinimumLevel.Information()
 #endif
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Hangfire", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Verbose)
                 .Enrich.FromLogContext()
+                .Enrich.WithHangfireContext()
                 .WriteTo.Async(c => c.File("Logs/logs.txt"))
+                .WriteTo.Hangfire(restrictedToMinimumLevel: LogEventLevel.Information)
 #if DEBUG
                 .WriteTo.Async(c => c.Console())
 #endif

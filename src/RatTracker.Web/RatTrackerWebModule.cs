@@ -1,4 +1,5 @@
 using Hangfire;
+using Hangfire.Console;
 using Hangfire.SqlServer;
 using Microsoft.OpenApi.Models;
 using Owl.reCAPTCHA;
@@ -92,6 +93,9 @@ namespace RatTracker.Web
         {
             context.Services.AddHangfire(config =>
             {
+                config.UseConsole();
+                config.UseSimpleAssemblyNameTypeSerializer();
+                config.UseRecommendedSerializerSettings();
                 config.UseSqlServerStorage(configuration.GetConnectionString("Default"));
             });
             JobStorage.Current = new SqlServerStorage(configuration.GetConnectionString("Default"));

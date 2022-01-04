@@ -16,5 +16,7 @@ namespace RatTracker.Schools
         public string Address3 { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+
+        public bool IsGeocoded { get; set; }
     }
 }
