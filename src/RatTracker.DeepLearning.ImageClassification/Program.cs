@@ -16,15 +16,15 @@ namespace RatTracker.DeepLearning.ImageClassification
             var workspaceRelativePath = Path.Combine(projectDirectory, "workspace");
             var assetsRelativePath = Path.Combine(projectDirectory, "assets");
 
-            MLContext mlContext = new MLContext();
+            var mlContext = new MLContext();
 
             // You must unzip assets.zip before training
             Console.WriteLine("Loading images.");
-            IEnumerable<ImageData> images = LoadImagesFromDirectory(folder: assetsRelativePath, useFolderNameAsLabel: true);
+            var images = LoadImagesFromDirectory(folder: assetsRelativePath, useFolderNameAsLabel: true);
 
-            IDataView imageData = mlContext.Data.LoadFromEnumerable(images);
+            var imageData = mlContext.Data.LoadFromEnumerable(images);
 
-            IDataView shuffledData = mlContext.Data.ShuffleRows(imageData);
+            var shuffledData = mlContext.Data.ShuffleRows(imageData);
 
             var preprocessingPipeline = mlContext.Transforms.Conversion.MapValueToKey(
                     inputColumnName: "Label",
@@ -34,16 +34,16 @@ namespace RatTracker.DeepLearning.ImageClassification
                     imageFolder: assetsRelativePath,
                     inputColumnName: "ImagePath"));
 
-            IDataView preProcessedData = preprocessingPipeline
+            var preProcessedData = preprocessingPipeline
                                 .Fit(shuffledData)
                                 .Transform(shuffledData);
 
-            TrainTestData trainSplit = mlContext.Data.TrainTestSplit(data: preProcessedData, testFraction: 0.3);
-            TrainTestData validationTestSplit = mlContext.Data.TrainTestSplit(trainSplit.TestSet);
+            var trainSplit = mlContext.Data.TrainTestSplit(data: preProcessedData, testFraction: 0.3);
+            var validationTestSplit = mlContext.Data.TrainTestSplit(trainSplit.TestSet);
 
-            IDataView trainSet = trainSplit.TrainSet;
-            IDataView validationSet = validationTestSplit.TrainSet;
-            IDataView testSet = validationTestSplit.TestSet;
+            var trainSet = trainSplit.TrainSet;
+            var validationSet = validationTestSplit.TrainSet;
+            var testSet = validationTestSplit.TestSet;
 
             var classifierOptions = new ImageClassificationTrainer.Options()
             {
@@ -72,11 +72,11 @@ namespace RatTracker.DeepLearning.ImageClassification
 
         public static void ClassifySingleImage(MLContext mlContext, IDataView data, ITransformer trainedModel)
         {
-            PredictionEngine<ModelInput, ModelOutput> predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(trainedModel);
+            var predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(trainedModel);
 
-            ModelInput image = mlContext.Data.CreateEnumerable<ModelInput>(data, reuseRowObject: true).First();
+            var image = mlContext.Data.CreateEnumerable<ModelInput>(data, reuseRowObject: true).First();
 
-            ModelOutput prediction = predictionEngine.Predict(image);
+            var prediction = predictionEngine.Predict(image);
 
             Console.WriteLine("Classifying single image");
             OutputPrediction(prediction);
@@ -84,9 +84,9 @@ namespace RatTracker.DeepLearning.ImageClassification
 
         public static void ClassifyImages(MLContext mlContext, IDataView data, ITransformer trainedModel)
         {
-            IDataView predictionData = trainedModel.Transform(data);
+            var predictionData = trainedModel.Transform(data);
 
-            IEnumerable<ModelOutput> predictions = mlContext.Data.CreateEnumerable<ModelOutput>(predictionData, reuseRowObject: true).Take(10);
+            var predictions = mlContext.Data.CreateEnumerable<ModelOutput>(predictionData, reuseRowObject: true).Take(10);
 
             Console.WriteLine("Classifying multiple images");
             foreach (var prediction in predictions)
@@ -97,7 +97,7 @@ namespace RatTracker.DeepLearning.ImageClassification
 
         private static void OutputPrediction(ModelOutput prediction)
         {
-            string imageName = Path.GetFileName(prediction.ImagePath);
+            var imageName = Path.GetFileName(prediction.ImagePath);
             Console.WriteLine($"Image: {imageName} | Actual Value: {prediction.Label} | Predicted Value: {prediction.PredictedLabel}");
         }
 
@@ -117,7 +117,7 @@ namespace RatTracker.DeepLearning.ImageClassification
                     label = Directory.GetParent(file).Name;
                 else
                 {
-                    for (int index = 0; index < label.Length; index++)
+                    for (var index = 0; index < label.Length; index++)
                     {
                         if (!char.IsLetter(label[index]))
                         {
