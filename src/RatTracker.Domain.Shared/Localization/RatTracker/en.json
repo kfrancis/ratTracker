@@ -3,6 +3,26 @@
   "texts": {
     "Menu:Home": "Home",
     "Welcome": "Welcome",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    "BracketA": "0-4",
+    "BracketB": "5-11",
+    "BracketC": "12-17",
+    "BracketD": "18-24",
+    "BracketE": "25-29",
+    "BracketF": "30-34",
+    "BracketG": "35-39",
+    "BracketH": "40-44",
+    "BracketI": "45-49",
+    "BracketJ": "50-54",
+    "BracketK": "55-59",
+    "BracketL": "60-64",
+    "BracketM": "65-69",
+    "BracketN": "70-74",
+    "BracketO": "75-79",
+    "BracketP": "80+",
+    "TestDate": "Date of Rapid Antigen Test",
+    "AgeOfTestedIndividual": "Age Of Tested Individual",
+    "ReportResult": "Report A Result",
+    "SubmitResult": "Submit Result"
   }
 }

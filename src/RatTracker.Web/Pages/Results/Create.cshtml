@@ -14,35 +14,59 @@
     PageLayout.Content.Title = L["Results"].Value;
     PageLayout.Content.MenuItemName = RatTrackerMenus.Results;
 }
-<h1>@L["NewResult"].Value</h1>
+<h1>@L["ReportResult"].Value</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form data-ajaxForm="true" asp-page="/Results/Create" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <abp-input asp-for="Result.TestDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" />
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" asp-for="Result.TestDate" required max="@DateTime.Now.ToString("yyyy-MM-dd")">
+                <label asp-for="Result.TestDate" class="form-label">@L["TestDate"]*</label>
+            </div>
 
-            <abp-select asp-for="Result.Age" />
+            <div class="form-floating mb-3">
+                <select asp-for="Result.Age" class="form-control" required>
+                    <option selected>@L["PleaseSelect"].Value</option>
+                    <option value="1">@L["BracketA"].Value</option>
+                    <option value="2">@L["BracketB"].Value</option>
+                    <option value="3">@L["BracketC"].Value</option>
+                    <option value="4">@L["BracketD"].Value</option>
+                    <option value="5">@L["BracketE"].Value</option>
+                    <option value="6">@L["BracketF"].Value</option>
+                    <option value="7">@L["BracketG"].Value</option>
+                    <option value="8">@L["BracketH"].Value</option>
+                    <option value="9">@L["BracketI"].Value</option>
+                    <option value="10">@L["BracketJ"].Value</option>
+                    <option value="11">@L["BracketK"].Value</option>
+                    <option value="12">@L["BracketL"].Value</option>
+                    <option value="13">@L["BracketM"].Value</option>
+                    <option value="14">@L["BracketN"].Value</option>
+                    <option value="15">@L["BracketO"].Value</option>
+                    <option value="16">@L["BracketP"].Value</option>
+                </select>
+                <label for="Result_Age">@L["AgeOfTestedIndividual"]</label>
+            </div>
 
             <abp-select asp-for="Result.Outcome" />
 
-            <div class="form-group">
-                <label for="Result_SchoolId">@L["School"]</label>
+            <div class="form-floating mb-3">                
                 <select id="Result_SchoolId"
-                        class="custom-select form-control"
+                        class="form-control"
                         name="Result.SchoolId"
                         data-value="@Model.Result.SchoolId" required>
                 </select>
+                <label for="Result_SchoolId">@L["School"]</label>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            <input type="submit" value="@L["SubmitResult"].Value" class="btn btn-primary" />
         </form>
     </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
