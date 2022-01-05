@@ -1,5 +1,5 @@
 # COVID-19 Crowdsourced RatTracker
-A Rapid Antigen Test (RAT) tracker which allows people to self report their test results and give people at least some idea of numbers in schools.
+A COVID-19 Rapid Antigen Test (RAT) tracker which allows people to self report their test results and give people at least some idea of numbers in schools.
 
 <img width="100%" src="map.png">
 
