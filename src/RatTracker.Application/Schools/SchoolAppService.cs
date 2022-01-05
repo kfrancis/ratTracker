@@ -57,6 +57,7 @@ namespace RatTracker.Schools
             return ObjectMapper.Map<School, SchoolDto>(school);
         }
 
+        [AllowAnonymous]
         public virtual async Task<IEnumerable<GeoCoordinate>> GetGeoCoordinateAsync(double lat, double lng)
         {
             var centerPoint = new Point(lng, lat)
@@ -64,7 +65,8 @@ namespace RatTracker.Schools
                 SRID = SchoolConsts.SRID
             };
             var schools = await _schoolRepository.GetListAsync(isGeoLocated: true).ConfigureAwait(false);
-            // within 20km
+
+            // return ones within 20km of the center of the map, which by default is Kingston
             return schools
                 .Where(x => x.Location != null && x.Location.Distance(centerPoint) <= 20000)
                 .OrderBy(x => x.Location.Distance(centerPoint))

@@ -1,6 +1,8 @@
 # RatTracker
 A Rapid Antigen Test (RAT) tracker which allows people to self report their test results and give people at least some idea of numbers in schools.
 
+<img width="500" src="map.png">
+
 Inspired by the work here https://thelocal.to/rat-tracker but I'm using some personal and professional experience here to bolster it's usefulness.
 
 ## Requirements
