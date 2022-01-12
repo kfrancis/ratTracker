@@ -16,11 +16,16 @@ namespace RatTracker.DeepLearning.ImageClassification
             var workspaceRelativePath = Path.Combine(projectDirectory, "workspace");
             var assetsRelativePath = Path.Combine(projectDirectory, "assets");
 
+            Console.WriteLine($"Project dir: {projectDirectory}");
+            Console.WriteLine($"workspaceRelative dir: {workspaceRelativePath}");
+            Console.WriteLine($"assetsRelative dir: {assetsRelativePath}");
+
             var mlContext = new MLContext();
 
             // You must unzip assets.zip before training
-            Console.WriteLine("Loading images.");
+            Console.WriteLine("Loading images ..");
             var images = LoadImagesFromDirectory(folder: assetsRelativePath, useFolderNameAsLabel: true);
+            Console.WriteLine($"Found {images.Count()} images.");
 
             var imageData = mlContext.Data.LoadFromEnumerable(images);
 
@@ -74,12 +79,18 @@ namespace RatTracker.DeepLearning.ImageClassification
         {
             var predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(trainedModel);
 
-            var image = mlContext.Data.CreateEnumerable<ModelInput>(data, reuseRowObject: true).First();
+            var image = mlContext.Data.CreateEnumerable<ModelInput>(data, reuseRowObject: true);
+            if (image != null && image.Any() && image.FirstOrDefault() != null)
+            {
+                var prediction = predictionEngine.Predict(image.FirstOrDefault());
 
-            var prediction = predictionEngine.Predict(image);
-
-            Console.WriteLine("Classifying single image");
-            OutputPrediction(prediction);
+                Console.WriteLine("Classifying single image");
+                OutputPrediction(prediction);
+            }
+            else
+            {
+                Console.WriteLine("Couldn't find a single image?");
+            }
         }
 
         public static void ClassifyImages(MLContext mlContext, IDataView data, ITransformer trainedModel)
@@ -88,11 +99,19 @@ namespace RatTracker.DeepLearning.ImageClassification
 
             var predictions = mlContext.Data.CreateEnumerable<ModelOutput>(predictionData, reuseRowObject: true).Take(10);
 
-            Console.WriteLine("Classifying multiple images");
-            foreach (var prediction in predictions)
+            if (predictions != null && predictions.Any())
             {
-                OutputPrediction(prediction);
+                Console.WriteLine("Classifying multiple images");
+                foreach (var prediction in predictions)
+                {
+                    OutputPrediction(prediction);
+                }
             }
+            else
+            {
+                Console.WriteLine("No predictions?");
+            }
+
         }
 
         private static void OutputPrediction(ModelOutput prediction)
@@ -105,6 +124,8 @@ namespace RatTracker.DeepLearning.ImageClassification
         {
             var files = Directory.GetFiles(folder, "*",
                 searchOption: SearchOption.AllDirectories);
+
+            List<ImageData> retVal = new List<ImageData>();
 
             foreach (var file in files)
             {
@@ -127,12 +148,14 @@ namespace RatTracker.DeepLearning.ImageClassification
                     }
                 }
 
-                yield return new ImageData()
+                retVal.Add(new ImageData()
                 {
                     ImagePath = file,
                     Label = label
-                };
+                });
             }
+
+            return retVal.AsEnumerable();
         }
     }
 
