@@ -1,6 +1,8 @@
 # COVID-19 Crowdsourced RatTracker
 A COVID-19 Rapid Antigen Test (RAT) tracker which allows people to self report their test results and give people at least some idea of numbers in schools.
 
+[![.NET](https://github.com/kfrancis/ratTracker/actions/workflows/dotnet.yml/badge.svg)](https://github.com/kfrancis/ratTracker/actions/workflows/dotnet.yml)
+
 <img width="100%" src="map.png">
 
 Inspired by the work here https://thelocal.to/rat-tracker but I'm using some personal and professional experience here to bolster it's usefulness.
