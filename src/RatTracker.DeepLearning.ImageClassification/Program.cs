@@ -43,12 +43,18 @@ namespace RatTracker.DeepLearning.ImageClassification
                                 .Fit(shuffledData)
                                 .Transform(shuffledData);
 
+            Console.WriteLine($"# preProcessedData: {preProcessedData.GetRowCount()}");
+
             var trainSplit = mlContext.Data.TrainTestSplit(data: preProcessedData, testFraction: 0.3);
             var validationTestSplit = mlContext.Data.TrainTestSplit(trainSplit.TestSet);
 
             var trainSet = trainSplit.TrainSet;
             var validationSet = validationTestSplit.TrainSet;
             var testSet = validationTestSplit.TestSet;
+
+            Console.WriteLine($"# Trainset: {trainSet.GetRowCount()}");
+            Console.WriteLine($"# ValidationSet: {validationSet.GetRowCount()}");
+            Console.WriteLine($"# TestSet: {testSet.GetRowCount()}");
 
             var classifierOptions = new ImageClassificationTrainer.Options()
             {
@@ -57,7 +63,7 @@ namespace RatTracker.DeepLearning.ImageClassification
                 ValidationSet = validationSet,
                 Arch = ImageClassificationTrainer.Architecture.ResnetV250,
                 MetricsCallback = (metrics) => Console.WriteLine(metrics),
-                TestOnTrainSet = false,
+                TestOnTrainSet = true,
                 ReuseTrainSetBottleneckCachedValues = true,
                 ReuseValidationSetBottleneckCachedValues = true
             };
