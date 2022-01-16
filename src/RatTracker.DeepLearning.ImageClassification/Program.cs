@@ -12,7 +12,7 @@ namespace RatTracker.DeepLearning.ImageClassification
     {
         private static void Main(string[] args)
         {
-            var projectDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
+            var projectDirectory = Path.GetFullPath(AppContext.BaseDirectory);
             var workspaceRelativePath = Path.Combine(projectDirectory, "workspace");
             var assetsRelativePath = Path.Combine(projectDirectory, "assets");
 
@@ -55,7 +55,7 @@ namespace RatTracker.DeepLearning.ImageClassification
                 FeatureColumnName = "Image",
                 LabelColumnName = "LabelAsKey",
                 ValidationSet = validationSet,
-                Arch = ImageClassificationTrainer.Architecture.ResnetV2101,
+                Arch = ImageClassificationTrainer.Architecture.ResnetV250,
                 MetricsCallback = (metrics) => Console.WriteLine(metrics),
                 TestOnTrainSet = false,
                 ReuseTrainSetBottleneckCachedValues = true,
